@@ -1,0 +1,11 @@
+FROM php:8.1.9-apache-buster as new-living-api-base
+
+WORKDIR /var/www/new-living-api/
+
+RUN a2enmod rewrite && \
+    apt-get -y update && \
+    apt-get -y upgrade && \
+    apt-get -y install git bash libzip-dev unzip curl && \
+    docker-php-ext-install opcache zip
+
+COPY --from=composer:2.4.0 /usr/bin/composer /usr/bin/composer
