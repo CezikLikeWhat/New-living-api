@@ -5,7 +5,7 @@ WORKDIR /var/www/new-living-api/
 RUN a2enmod rewrite && \
     apt-get -y update && \
     apt-get -y upgrade && \
-    apt-get -y install git bash libzip-dev unzip curl && \
-    docker-php-ext-install opcache zip
+    apt-get -y install git bash libzip-dev unzip curl libpq-dev && \
+    docker-php-ext-install opcache zip pdo pdo_pgsql
 
 COPY --from=composer:2.4.0 /usr/bin/composer /usr/bin/composer

@@ -24,3 +24,17 @@ services:
       - .:/var/www/new-living-api/
     networks:
       - default
+
+  new-living-api-database:
+    image: postgres:14.3-alpine
+    container_name: new-living-api-database
+    environment:
+      POSTGRES_DB: new-living-api-db
+      POSTGRES_PASSWORD: new-living-api
+      POSTGRES_USER: new-living-api
+    volumes:
+      - new-living-api-db-volume:/var/lib/postgresql/data:rw
+
+
+volumes:
+  new-living-api-db-volume:
