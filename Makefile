@@ -1,38 +1,56 @@
-name := new-living-api-dev
+# Variables
+SHELL := /bin/bash
+NAME := new-living-api-dev
+EXEC_COMMAND ?= docker-compose exec $(NAME)
+
+# Building and management project
+install: build up composer preparedb
 
 build:
 	docker-compose build
 
 composer:
-	docker-compose exec $(name) composer install -o
+	${EXEC_COMMAND} composer install -o
 
 up:
 	docker-compose up -d
 
-install: build up composer
-
 down:
 	docker-compose down
+
+restart: down install
 
 stop:
 	docker-compose stop
 
 bash:
-	docker-compose exec $(name) bash
+	${EXEC_COMMAND} $(SHELL)
 
+# Tests
 test:
-	docker-compose exec $(name) vendor/bin/phpunit tests
+	${EXEC_COMMAND} vendor/bin/phpunit tests
 
-restart: down install
+
+# Static analysis
+static_checks: phpcsfixer phpstan psalm
 
 phpcsfixer:
-	docker-compose exec $(name) php -dmemory_limit=-1 vendor/bin/php-cs-fixer --no-interaction --allow-risky=yes --dry-run --diff fix
+	${EXEC_COMMAND} php -dmemory_limit=-1 vendor/bin/php-cs-fixer --no-interaction --allow-risky=yes --dry-run --diff fix
 
 phpcsfixer_fix:
-	docker-compose exec $(name) php -dmemory_limit=-1 vendor/bin/php-cs-fixer --no-interaction --allow-risky=yes --ansi fix
+	${EXEC_COMMAND} php -dmemory_limit=-1 vendor/bin/php-cs-fixer --no-interaction --allow-risky=yes --ansi fix
 
 phpstan:
-	docker-compose exec $(name) php -dmemory_limit=-1 vendor/bin/phpstan --level=max analyse src
+	${EXEC_COMMAND} php -dmemory_limit=-1 vendor/bin/phpstan --configuration=phpstan.neon --level=max analyse src
 
 psalm:
-	docker-compose exec $(name) php -dmemory_limit=-1 vendor/bin/psalm
+	${EXEC_COMMAND} php -dmemory_limit=-1 vendor/bin/psalm
+
+# Database
+preparedb:
+	${EXEC_COMMAND} bin/console doctrine:database:create --if-not-exists;
+	${EXEC_COMMAND} bin/console doctrine:migrations:migrate --no-interaction
+
+preparedbtest:
+	${EXEC_COMMAND} bin/console doctrine:database:create --env=test --if-not-exists;
+	${EXEC_COMMAND} bin/console doctrine:migrations:migrate --env=test
