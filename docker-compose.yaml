@@ -1,0 +1,26 @@
+version: "3.9"
+
+networks:
+  default:
+
+services:
+
+  new-living-api-base:
+    container_name: new-living-api-base
+    build:
+      context: .
+      dockerfile: docker/base/Dockerfile
+    image: new-living-api-base
+
+  new-living-api-dev:
+    container_name: new-living-api-dev
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    ports:
+      - "8080:80"
+    image: new-living-api-dev
+    volumes:
+      - .:/var/www/new-living-api/
+    networks:
+      - default
