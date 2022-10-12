@@ -5,36 +5,38 @@ networks:
 
 services:
 
-  new-living-api-base:
-    container_name: new-living-api-base
+  new-living-base:
+    container_name: new-living-base
     build:
       context: .
       dockerfile: docker/base/Dockerfile
-    image: new-living-api-base
+    image: new-living-base
 
-  new-living-api-dev:
-    container_name: new-living-api-dev
+  new-living-dev:
+    container_name: new-living-dev
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
     ports:
-      - "8080:80"
-    image: new-living-api-dev
+      - "80:80"
+    image: new-living-dev
     volumes:
-      - .:/var/www/new-living-api/
+      - .:/var/www/new-living/
     networks:
       - default
 
-  new-living-api-database:
+  new-living-database:
     image: postgres:14.3-alpine
-    container_name: new-living-api-database
+    container_name: new-living-database
     environment:
-      POSTGRES_DB: new-living-api-db
-      POSTGRES_PASSWORD: new-living-api
-      POSTGRES_USER: new-living-api
+      POSTGRES_DB: new-living-db
+      POSTGRES_PASSWORD: new-living
+      POSTGRES_USER: new-living
+    ports:
+      - "5432:5432"
     volumes:
-      - new-living-api-db-volume:/var/lib/postgresql/data:rw
+      - new-living-db-volume:/var/lib/postgresql/data:rw
 
 
 volumes:
-  new-living-api-db-volume:
+  new-living-db-volume:

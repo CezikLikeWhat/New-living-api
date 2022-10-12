@@ -1,8 +1,8 @@
-FROM new-living-api-base as new-living-api-dev
+FROM new-living-base as new-living-dev
 
-WORKDIR /var/www/new-living-api/
+WORKDIR /var/www/new-living/
 
 COPY ./docker/dev/php.ini $PHP_INI_DIR/conf.d/
-COPY ./docker/dev/vhost.conf /etc/apache2/sites-available/new-living-api.conf
+COPY ./docker/dev/vhost.conf /etc/apache2/sites-available/new-living.conf
 
-RUN a2ensite new-living-api
+RUN a2ensite new-living

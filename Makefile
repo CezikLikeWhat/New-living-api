@@ -1,6 +1,6 @@
 # Variables
 SHELL := /bin/bash
-NAME := new-living-api-dev
+NAME := new-living-dev
 EXEC_COMMAND ?= docker-compose exec $(NAME)
 
 # Building and management project
