@@ -2,10 +2,27 @@
 
 {% block title %} Login Panel {% endblock %}
 
+{#{% block stylesheets %}#}
+{#    <style>#}
+{#        html,body {#}
+{#            height: 100%;#}
+{#        }#}
+{#    </style>#}
+{#{% endblock %}#}
+
+
 {% block body %}
+
+
+{#    <div class="h-100 d-flex align-items-center justify-content-center">#}
+{#        <a class="btn btn-primary">#}
+{#            XD#}
+{#        </a>#}
+{#    </div>#}
 
     <a href="{{ path('connect_google_start') }}">
         <span>Login with Google</span>
     </a>
 
 {% endblock %}
+

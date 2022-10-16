@@ -83,7 +83,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        return new RedirectResponse($this->router->generate('test_controller'));
+        return new RedirectResponse($this->router->generate('load_main_panel'));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
