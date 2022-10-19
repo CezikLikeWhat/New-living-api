@@ -12,7 +12,6 @@ use Egulias\EmailValidator\Validation\RFCValidation;
 
 class Email implements \JsonSerializable
 {
-
     public function __construct(
         private string $email
     ) {
@@ -59,7 +58,7 @@ class Email implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'email' => $this->email
+            'email' => $this->email,
         ];
     }
 }

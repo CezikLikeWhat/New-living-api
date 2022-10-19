@@ -22,14 +22,18 @@ final class EmailType extends Type
         return 'VARCHAR(320)';
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        return $value?->value();
+        /** @var Email $email */
+        $email = $value;
+        return $email->value();
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?Email
+    public function convertToPHPValue($value, AbstractPlatform $platform): Email
     {
-        return new Email($value) ?? null;
+        /** @var string $email */
+        $email = $value;
+        return new Email($email);
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
