@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "egulias/email-validator": "^3.2",
         "knpuniversity/oauth2-client-bundle": "^2.10",
         "league/oauth2-google": "^4.0",
         "symfony/asset": "6.1.*",
