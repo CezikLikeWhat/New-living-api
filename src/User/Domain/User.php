@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Domain;
 
+use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
 use App\Device\Domain\Device;
 use App\User\Domain\Exception\UserException;
@@ -21,7 +22,7 @@ class User
         private readonly string $googleId,
         private string $firstName,
         private string $lastName,
-        private string $email,
+        private Email $email,
         private array $devices,
         private array $roles,
     ) {
@@ -30,9 +31,6 @@ class User
         }
         if (!$lastName || ctype_space($this->lastName)) {
             throw UserException::byEmptyProperty('last name');
-        }
-        if (!$email || ctype_space($this->email)) {
-            throw UserException::byEmptyProperty('email');
         }
     }
 
@@ -68,17 +66,11 @@ class User
 
     public function email(): string
     {
-        return $this->email;
+        return $this->email->value();
     }
 
-    /**
-     * @throws UserException
-     */
-    public function setEmail(string $email): void
+    public function setEmail(Email $email): void
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw UserException::byInvalidFormat('email', $email);
-        }
         $this->email = $email;
     }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\User\Application\UseCase;
 
+use App\Core\Domain\Email;
+use App\Core\Domain\Exception\EmailException;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\User\Application\UseCase\AddUser\Command;
 use App\User\Domain\Exception\UserException;
@@ -21,6 +23,7 @@ class AddUser
 
     /**
      * @throws UserException
+     * @throws EmailException
      */
     public function __invoke(Command $command): void
     {
@@ -29,7 +32,7 @@ class AddUser
             $command->googleId,
             $command->firstName,
             $command->lastName,
-            $command->email,
+            new Email($command->email),
             $command->devices,
             $command->roles
         );
