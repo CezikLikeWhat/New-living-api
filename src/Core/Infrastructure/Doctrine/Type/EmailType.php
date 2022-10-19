@@ -26,6 +26,7 @@ final class EmailType extends Type
     {
         /** @var Email $email */
         $email = $value;
+
         return $email->value();
     }
 
@@ -33,6 +34,7 @@ final class EmailType extends Type
     {
         /** @var string $email */
         $email = $value;
+
         return new Email($email);
     }
 
