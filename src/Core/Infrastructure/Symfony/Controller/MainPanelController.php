@@ -12,18 +12,19 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class MainPanelController extends AbstractController
 {
-    #[Route('/', name:'load_main_panel', methods:['GET'])]
+    #[Route('/', name: 'load_main_panel', methods: ['GET'])]
     public function loadMainPanel(#[CurrentUser] User $user): Response
     {
         return $this->render('main.html.twig');
     }
 
-    #[Route('/profile', name:'user_profile', methods:['GET'])]
+    #[Route('/profile', name: 'user_profile', methods: ['GET'])]
     public function userProfile(): Response
     {
         return $this->render('profile.html.twig');
     }
-    #[Route('/devices', name:'devices', methods:['GET'])]
+
+    #[Route('/devices', name: 'devices', methods: ['GET'])]
     public function devices(): Response
     {
         return $this->render('devices.html.twig');

@@ -14,7 +14,7 @@ final class MACAddress implements \JsonSerializable
     public function __construct(
         private readonly string $address,
     ) {
-        if(false === filter_var($this->address, FILTER_VALIDATE_MAC)){
+        if (false === filter_var($this->address, FILTER_VALIDATE_MAC)) {
             throw InvalidMACAddress::byFormat($this->address);
         }
     }

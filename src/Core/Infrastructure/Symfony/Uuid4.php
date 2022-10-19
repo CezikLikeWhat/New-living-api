@@ -34,6 +34,11 @@ class Uuid4 implements Uuid
         return $this->toString() === $uuid->toString();
     }
 
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     public function jsonSerialize(): mixed
     {
         return $this->toString();

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Security\Infrastructure\Google;
 
 use App\Security\Infrastructure\Symfony\User\User;
+use App\User\Application\UseCase\AddUser\Command;
+use App\User\Domain\Repository\UserRepository;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use League\OAuth2\Client\Provider\GoogleUser;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -30,6 +33,8 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
     public function __construct(
         private readonly ClientRegistry $clientRegistry,
         private readonly RouterInterface $router,
+        private readonly UserRepository $userRepository,
+        private readonly MessageBusInterface $bus,
         string $roleAdminEmails,
     ) {
         /** @var string[] $decodedEmails */
@@ -61,22 +66,41 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                 /** @var GoogleUser $googleUser */
                 $googleUser = $client->fetchUserFromToken($accessToken);
 
-                /** @var string $id */
-                $id = $googleUser->getId();
+                /** @var string $googleUserId */
+                $googleUserId = $googleUser->getId();
+                $googleFirstName = $googleUser->getFirstName() ?? 'John';
+                $googleLastName = $googleUser->getLastName() ?? 'Doe';
+                $googleEmail = $googleUser->getEmail() ?? 'john.doe@gmail.com';
+                $roles = ['ROLE_USER'];
 
-                $user = new User(
-                    $id,
-                    (string) $googleUser->getFirstName(),
-                    (string) $googleUser->getLastName(),
-                    (string) $googleUser->getEmail(),
-                    ['ROLE_USER']
-                );
+                $user = $this->userRepository->findByGoogleId($googleUserId);
 
-                if (in_array($user->getEmail(), $this->roleAdminEmails, false)) {
-                    $user->addRole('ROLE_ADMIN');
+                if (!$user) {
+                    if (in_array($googleEmail, $this->roleAdminEmails, true)) {
+                        $roles[] = 'ROLE_ADMIN';
+                    }
+
+                    $this->bus->dispatch(new Command(
+                        $googleUserId,
+                        $googleFirstName,
+                        $googleLastName,
+                        $googleEmail,
+                        [],
+                        $roles
+                    ));
+
+                    return new User(
+                        $googleUserId,
+                        $googleEmail,
+                        $roles
+                    );
                 }
 
-                return $user;
+                return new User(
+                    $user->googleIdentifier(),
+                    $user->email(),
+                    $user->roles(),
+                );
             })
         );
     }

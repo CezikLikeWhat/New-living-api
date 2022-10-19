@@ -13,34 +13,16 @@ class User implements UserInterface
      * @param string[] $roles
      */
     public function __construct(
-        private readonly string $id,
-        private readonly string $firstName,
-        private readonly string $lastName,
+        private readonly string $googleId,
         private readonly string $email,
         private array $roles,
     ) {
-        if (!$firstName || ctype_space($this->firstName)) {
-            throw new InvalidArgumentException('User first name is empty');
-        }
-        if (!$lastName || ctype_space($this->lastName)) {
-            throw new InvalidArgumentException('User last name is empty');
-        }
         if (!$email || ctype_space($this->email)) {
             throw new InvalidArgumentException('User email is empty');
         }
     }
 
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function getEmail(): string
+    public function email(): string
     {
         return $this->email;
     }
@@ -69,6 +51,6 @@ class User implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->id;
+        return $this->googleId;
     }
 }

@@ -3,8 +3,8 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-<!--    <embeddable name="App\Device\Domain\MACAddress">-->
-<!--        <field name="address" column="address"/>-->
-<!--    </embeddable>-->
+    <embeddable name="App\Device\Domain\MACAddress">
+        <field name="address" column="address"/>
+    </embeddable>
 
 </doctrine-mapping>
