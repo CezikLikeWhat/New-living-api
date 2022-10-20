@@ -12,7 +12,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class UsersFixtures extends Fixture
 {
-
     public function __construct(
         private readonly MessageBusInterface $bus,
     ) {
@@ -33,7 +32,7 @@ class UsersFixtures extends Fixture
             devices: [
                 Uuid4::fromString('0ca28ec2-e9eb-4013-a121-097c380c55bd'),
                 Uuid4::fromString('36340076-0431-4a95-8444-69cf1f3173ec'),
-                Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb')
+                Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb'),
             ],
             roles: ['ROLE_USER', 'ROLE_ADMIN']
         );
@@ -44,7 +43,6 @@ class UsersFixtures extends Fixture
             email: 'ryszardkowalski76@gmail.com',
             devices: [
                 Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76'),
-
             ],
             roles: ['ROLE_USER']
         );
@@ -54,7 +52,7 @@ class UsersFixtures extends Fixture
             lastName: 'Pamiątka',
             email: 'madzia2000@gmail.com',
             devices: [
-                Uuid4::fromString('365f42e1-4c47-4292-b788-631cb15ac7a9')
+                Uuid4::fromString('365f42e1-4c47-4292-b788-631cb15ac7a9'),
             ],
             roles: ['ROLE_USER']
         );

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Core\Domain\Uuid;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Device\Application\UseCase\AddDevice\Command as AddDeviceCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,7 +12,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class DevicesFixtures extends Fixture
 {
-
     public function __construct(
         private readonly MessageBusInterface $bus,
     ) {
