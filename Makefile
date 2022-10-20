@@ -54,3 +54,7 @@ preparedb:
 preparedbtest:
 	${EXEC_COMMAND} bin/console doctrine:database:create --env=test --if-not-exists;
 	${EXEC_COMMAND} bin/console doctrine:migrations:migrate --env=test
+
+# Fixtures
+load_fixtures:
+	${EXEC_COMMAND} bin/console doctrine:fixtures:load

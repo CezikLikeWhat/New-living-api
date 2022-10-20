@@ -12,4 +12,15 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
-    <plugins><pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/></plugins></psalm>
+
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+    </plugins>
+    <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="src/DataFixtures"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+    </issueHandlers>
+</psalm>

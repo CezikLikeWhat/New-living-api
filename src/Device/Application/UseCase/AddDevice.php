@@ -27,7 +27,7 @@ class AddDevice
     public function __invoke(Command $command): void
     {
         $device = new Device(
-            Uuid4::generateNew(),
+            $command->id ?? Uuid4::generateNew(),
             $command->name,
             DeviceType::fromString($command->deviceType),
             new MACAddress($command->macAddress)

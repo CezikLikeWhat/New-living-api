@@ -17,8 +17,8 @@ class Command
         public readonly string $firstName,
         public readonly string $lastName,
         public readonly string $email,
-        public readonly array $devices,
-        public readonly array $roles,
+        public readonly array $devices = [],
+        public readonly array $roles = ['ROLE_USER'],
     ) {
     }
 }
