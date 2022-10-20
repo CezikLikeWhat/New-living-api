@@ -1,10 +1,6 @@
 version: "3.9"
 
-networks:
-  default:
-
 services:
-
   new-living-base:
     container_name: new-living-base
     build:
@@ -17,26 +13,8 @@ services:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
-    ports:
-      - "80:80"
     image: new-living-dev
-    volumes:
-      - .:/var/www/new-living/
-    networks:
-      - default
 
   new-living-database:
     image: postgres:14.3-alpine
     container_name: new-living-database
-    environment:
-      POSTGRES_DB: new-living-db
-      POSTGRES_PASSWORD: new-living
-      POSTGRES_USER: new-living
-    ports:
-      - "5432:5432"
-    volumes:
-      - new-living-db-volume:/var/lib/postgresql/data:rw
-
-
-volumes:
-  new-living-db-volume:
