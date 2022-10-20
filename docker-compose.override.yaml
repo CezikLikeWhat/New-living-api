@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  new-living-dev:
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/new-living/
+    networks:
+      - default
+
+  new-living-database:
+    environment:
+      POSTGRES_DB: new-living-db
+      POSTGRES_PASSWORD: new-living
+      POSTGRES_USER: new-living
+    ports:
+      - "5432:5432"
+    volumes:
+      - new-living-db-volume:/var/lib/postgresql/data:rw
+
+volumes:
+  new-living-db-volume:
+
+networks:
+  default:
