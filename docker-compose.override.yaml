@@ -19,6 +19,11 @@ services:
     volumes:
       - new-living-db-volume:/var/lib/postgresql/data:rw
 
+  new-living-mailer:
+    ports:
+      - "1025"
+      - "1080"
+
 volumes:
   new-living-db-volume:
 
