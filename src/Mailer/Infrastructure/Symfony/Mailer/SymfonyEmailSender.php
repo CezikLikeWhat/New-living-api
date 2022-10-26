@@ -9,7 +9,6 @@ use App\Mailer\Application\EmailSender;
 use App\Mailer\Application\MailingClient;
 use App\Mailer\Domain\EmailSchema;
 use App\Mailer\Domain\TemplateProperties;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class SymfonyEmailSender implements EmailSender
 {
