@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Symfony\Controller;
 
+use App\Core\Domain\Email;
+use App\Mailer\Application\EmailSender;
 use App\Security\Infrastructure\Symfony\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +21,9 @@ class MainPanelController extends AbstractController
     }
 
     #[Route('/profile', name: 'user_profile', methods: ['GET'])]
-    public function userProfile(): Response
+    public function userProfile(EmailSender $sender): Response
     {
+        $sender->sendGreetingEmail('Cezary', new Email('cezarymackowski99@gmail.com'));
         return $this->render('profile.html.twig');
     }
 
