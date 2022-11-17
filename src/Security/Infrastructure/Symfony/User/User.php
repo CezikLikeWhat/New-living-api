@@ -24,7 +24,7 @@ class User implements UserInterface
         }
     }
 
-    public function id(): string
+    public function systemIdentifier(): Uuid
     {
         return $this->id;
     }
