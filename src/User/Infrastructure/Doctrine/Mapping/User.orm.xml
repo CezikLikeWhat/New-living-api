@@ -9,7 +9,6 @@
         <field name="firstName" column="first_name"/>
         <field name="lastName" column="last_name"/>
         <field name="email" column="email" type="email_type"/>
-        <field name="devices" column="devices" type="json"/>
         <field name="roles" column="roles" type="json"/>
     </entity>
 
