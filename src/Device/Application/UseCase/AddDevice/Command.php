@@ -9,9 +9,11 @@ use App\Core\Domain\Uuid;
 class Command
 {
     public function __construct(
+        public readonly Uuid $userId,
         public readonly string $name,
         public readonly string $deviceType,
         public readonly string $macAddress,
+        public readonly \DateTimeImmutable $createdAt,
         public readonly ?Uuid $id = null,
     ) {
     }
