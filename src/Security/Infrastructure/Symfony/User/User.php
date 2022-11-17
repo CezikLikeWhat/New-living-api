@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Infrastructure\Symfony\User;
 
+use App\Core\Domain\Uuid;
 use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -13,6 +14,7 @@ class User implements UserInterface
      * @param string[] $roles
      */
     public function __construct(
+        private readonly Uuid $id,
         private readonly string $googleId,
         private readonly string $email,
         private array $roles,
@@ -20,6 +22,11 @@ class User implements UserInterface
         if (!$email || ctype_space($this->email)) {
             throw new InvalidArgumentException('User email is empty');
         }
+    }
+
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function email(): string

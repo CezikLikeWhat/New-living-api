@@ -29,6 +29,7 @@ class UserProvider implements UserProviderInterface
         }
 
         return new User(
+            $userTakenFromDatabase->id(),
             $userTakenFromDatabase->googleIdentifier(),
             $userTakenFromDatabase->email(),
             $userTakenFromDatabase->roles()

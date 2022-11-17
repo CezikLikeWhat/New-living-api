@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Infrastructure\Google;
 
 use App\Security\Infrastructure\Symfony\User\User;
+use App\User\Application\UseCase\AddUser;
 use App\User\Application\UseCase\AddUser\Command;
 use App\User\Domain\Repository\UserRepository;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
@@ -80,16 +81,19 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                         $roles[] = 'ROLE_ADMIN';
                     }
 
-                    $this->bus->dispatch(new Command(
+                    $this->bus->dispatch(new AddUser\Command(
                         $googleUserId,
                         $googleFirstName,
                         $googleLastName,
                         $googleEmail,
-                        [],
+                        null,
                         $roles
                     ));
 
+                    $id = $this->userRepository->findByGoogleId($googleUserId)?->id();
+
                     return new User(
+                        $id,
                         $googleUserId,
                         $googleEmail,
                         $roles
@@ -97,6 +101,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                 }
 
                 return new User(
+                    $user->id(),
                     $user->googleIdentifier(),
                     $user->email(),
                     $user->roles(),
