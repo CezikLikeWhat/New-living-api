@@ -52,13 +52,8 @@ class Email implements \JsonSerializable
         return $this->email === $email->value();
     }
 
-    /**
-     * @return array{email: string}
-     */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): string
     {
-        return [
-            'email' => $this->email,
-        ];
+        return $this->email;
     }
 }
