@@ -21,7 +21,7 @@ class Device implements \JsonSerializable
      * @return array{
      *     name: string,
      *     device_type: string,
-     *     mac_address: string,
+     *     mac_address: MACAddress,
      *     created_at: string
      * }
      */

@@ -41,7 +41,7 @@ class ProfileController extends AbstractController
         return $this->json(
             [
                 'user' => $userInfo,
-                'userDevices' => $userDevices
+                'userDevices' => $userDevices,
             ],
             Response::HTTP_OK
         );

@@ -9,6 +9,7 @@ use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 class DBALUserQuery implements UserQuery
@@ -24,14 +25,14 @@ class DBALUserQuery implements UserQuery
          *     first_name: string,
          *     last_name: string,
          *     email: string,
-         * [] $data
+         * } $data
          */
         $data = $this->connection->fetchAssociative('
             SELECT u.first_name, u.last_name, u.email
             FROM users u
             WHERE u.id = :userId
         ', [
-            'userId' => $id->toString()
+            'userId' => $id->toString(),
         ]);
 
         return new UserQuery\UserInformations(
@@ -59,11 +60,11 @@ class DBALUserQuery implements UserQuery
             'userId' => $id->toString(),
         ]);
 
-        return array_map(static fn(array $device) => new UserQuery\Device(
+        return array_map(static fn (array $device) => new UserQuery\Device(
             name: $device['name'],
             deviceType: DeviceType::fromString($device['device_type']),
             macAddress: new MACAddress($device['mac_address']),
-            createdAt: \DateTimeImmutable::createFromFormat('Y-m-d', $device['created_at'])
-        ),$data);
+            createdAt: \DateTimeImmutable::createFromFormat('Y-m-d', $device['created_at']) ?: new DateTimeImmutable()
+        ), $data);
     }
 }

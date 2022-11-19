@@ -25,7 +25,7 @@ class DevicesController extends AbstractController
         $userDevices = $this->userQuery->getAllUserDevicesByUserId($user->systemIdentifier());
 
         return $this->render('devices.html.twig', [
-            'userDevices' => $userDevices
+            'userDevices' => $userDevices,
         ]);
     }
 
@@ -37,7 +37,7 @@ class DevicesController extends AbstractController
 
         return $this->json(
             [
-                'userDevices' => $userDevices
+                'userDevices' => $userDevices,
             ],
             Response::HTTP_OK
         );

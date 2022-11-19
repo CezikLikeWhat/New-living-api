@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Security\Infrastructure\Google;
 
+use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Security\Infrastructure\Symfony\User\User;
 use App\User\Application\UseCase\AddUser;
-use App\User\Application\UseCase\AddUser\Command;
 use App\User\Domain\Repository\UserRepository;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
@@ -93,7 +93,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                     $id = $this->userRepository->findByGoogleId($googleUserId)?->id();
 
                     return new User(
-                        $id,
+                        $id ?? Uuid4::generateNew(),
                         $googleUserId,
                         $googleEmail,
                         $roles

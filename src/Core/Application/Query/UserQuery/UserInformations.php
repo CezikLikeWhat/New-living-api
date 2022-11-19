@@ -20,7 +20,7 @@ class UserInformations implements \JsonSerializable
         return [
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'email' => $this->email
+            'email' => $this->email,
         ];
     }
 }
