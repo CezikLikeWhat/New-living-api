@@ -9,7 +9,6 @@ use App\Core\Domain\Uuid;
 class Command
 {
     /**
-     * @param Uuid[] $devices
      * @param string[] $roles
      */
     public function __construct(
@@ -17,7 +16,7 @@ class Command
         public readonly string $firstName,
         public readonly string $lastName,
         public readonly string $email,
-        public readonly array $devices = [],
+        public readonly ?Uuid $userId = null,
         public readonly array $roles = ['ROLE_USER'],
     ) {
     }

@@ -29,11 +29,7 @@ class UsersFixtures extends Fixture
             firstName: 'Cezary',
             lastName: 'Maćkowski',
             email: 'cezary.mackowski@gmail.com',
-            devices: [
-                Uuid4::fromString('0ca28ec2-e9eb-4013-a121-097c380c55bd'),
-                Uuid4::fromString('36340076-0431-4a95-8444-69cf1f3173ec'),
-                Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb'),
-            ],
+            userId: Uuid4::fromString('6444fa16-a42b-49fc-83ba-0019e596ded0'),
             roles: ['ROLE_USER', 'ROLE_ADMIN']
         );
         $commandUserTwo = new AddUserCommand(
@@ -41,9 +37,7 @@ class UsersFixtures extends Fixture
             firstName: 'Ryszard',
             lastName: 'Kowalski',
             email: 'ryszardkowalski76@gmail.com',
-            devices: [
-                Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76'),
-            ],
+            userId: Uuid4::fromString('217aa4b9-5fb0-45c6-afff-81894f7af357'),
             roles: ['ROLE_USER']
         );
         $commandUserThree = new AddUserCommand(
@@ -51,9 +45,7 @@ class UsersFixtures extends Fixture
             firstName: 'Magdalena',
             lastName: 'Pamiątka',
             email: 'madzia2000@gmail.com',
-            devices: [
-                Uuid4::fromString('365f42e1-4c47-4292-b788-631cb15ac7a9'),
-            ],
+            userId: Uuid4::fromString('7b85810c-2ad4-4ce2-b088-f0bf2b5bd3c9'),
             roles: ['ROLE_USER']
         );
 

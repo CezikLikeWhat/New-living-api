@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Device\Application\UseCase;
 
 use App\Core\Infrastructure\Symfony\Uuid4;
-use App\Device\Application\UseCase\AddDevice\Command;
 use App\Device\Domain\Device;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\Exception\InvalidMACAddress;
@@ -24,13 +23,15 @@ class AddDevice
     /**
      * @throws InvalidMACAddress
      */
-    public function __invoke(Command $command): void
+    public function __invoke(AddDevice\Command $command): void
     {
         $device = new Device(
-            $command->id ?? Uuid4::generateNew(),
-            $command->name,
-            DeviceType::fromString($command->deviceType),
-            new MACAddress($command->macAddress)
+            id: $command->id ?? Uuid4::generateNew(),
+            userId: $command->userId,
+            name: $command->name,
+            deviceType: DeviceType::fromString($command->deviceType),
+            macAddress: new MACAddress($command->macAddress),
+            createdAt: $command->createdAt,
         );
 
         $this->repository->add($device);

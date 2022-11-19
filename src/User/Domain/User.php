@@ -6,13 +6,11 @@ namespace App\User\Domain;
 
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
-use App\Device\Domain\Device;
 use App\User\Domain\Exception\UserException;
 
 class User
 {
     /**
-     * @param Uuid[] $devices
      * @param string[] $roles
      *
      * @throws UserException
@@ -23,7 +21,6 @@ class User
         private string $firstName,
         private string $lastName,
         private Email $email,
-        private array $devices,
         private array $roles,
     ) {
         if (!$firstName || ctype_space($this->firstName)) {
@@ -72,19 +69,6 @@ class User
     public function setEmail(Email $email): void
     {
         $this->email = $email;
-    }
-
-    /**
-     * @return Uuid[]
-     */
-    public function devices(): array
-    {
-        return $this->devices;
-    }
-
-    public function addDevice(Device $device): void
-    {
-        $this->devices[] = $device->id;
     }
 
     /**
