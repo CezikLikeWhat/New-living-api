@@ -55,7 +55,7 @@ class DBALUserQuery implements UserQuery
             SELECT d.name, d.device_type, d.mac_address, d.created_at
             FROM devices d
             WHERE d.user_id = :userId
-            ORDER BY d.name
+            ORDER BY d.created_at
         ', [
             'userId' => $id->toString(),
         ]);
