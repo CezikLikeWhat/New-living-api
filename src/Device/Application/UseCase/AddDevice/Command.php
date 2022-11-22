@@ -13,7 +13,6 @@ class Command
         public readonly string $name,
         public readonly string $deviceType,
         public readonly string $macAddress,
-        public readonly \DateTimeImmutable $createdAt,
         public readonly ?Uuid $id = null,
     ) {
     }

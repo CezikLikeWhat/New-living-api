@@ -45,12 +45,12 @@ when@test:
                         admin: { password: 'admin123', roles: [ 'ROLE_ADMIN' ] }
                         user: { password: 'user123', roles: [ 'ROLE_USER' ] }
 
-            firewalls:
-                main:
-                    custom_authenticators: [ ]
-                    provider: test_users
-                    logout:
-                        path: logout
+        firewalls:
+            main:
+                custom_authenticators: [ ]
+                provider: test_users
+                logout:
+                    path: logout
 
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is

@@ -7,6 +7,7 @@ namespace App\Core\Infrastructure\Doctrine\Query;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
+use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use DateTimeImmutable;
@@ -28,7 +29,9 @@ class DBALUserQuery implements UserQuery
          * } $data
          */
         $data = $this->connection->fetchAssociative('
-            SELECT u.first_name, u.last_name, u.email
+            SELECT u.first_name, 
+                   u.last_name,
+                   u.email
             FROM users u
             WHERE u.id = :userId
         ', [
@@ -45,6 +48,7 @@ class DBALUserQuery implements UserQuery
     public function getAllUserDevicesByUserId(Uuid $id): array
     {
         /** @var array{
+         *     id: string,
          *     name: string,
          *     device_type: string,
          *     mac_address: string,
@@ -52,15 +56,20 @@ class DBALUserQuery implements UserQuery
          * }[] $data
          */
         $data = $this->connection->fetchAllAssociative('
-            SELECT d.name, d.device_type, d.mac_address, d.created_at
+            SELECT d.id, 
+                   d.name, 
+                   d.device_type,
+                   d.mac_address,
+                   d.created_at
             FROM devices d
             WHERE d.user_id = :userId
-            ORDER BY d.name
+            ORDER BY d.created_at
         ', [
             'userId' => $id->toString(),
         ]);
 
         return array_map(static fn (array $device) => new UserQuery\Device(
+            id: Uuid4::FromString($device['id']),
             name: $device['name'],
             deviceType: DeviceType::fromString($device['device_type']),
             macAddress: new MACAddress($device['mac_address']),

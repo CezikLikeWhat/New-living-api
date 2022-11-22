@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Device\Application\UseCase;
 
+use App\Core\Domain\Clock;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Device\Domain\Device;
 use App\Device\Domain\DeviceType;
@@ -17,6 +18,7 @@ class AddDevice
 {
     public function __construct(
         private readonly DeviceRepository $repository,
+        private readonly Clock $clock,
     ) {
     }
 
@@ -31,7 +33,7 @@ class AddDevice
             name: $command->name,
             deviceType: DeviceType::fromString($command->deviceType),
             macAddress: new MACAddress($command->macAddress),
-            createdAt: $command->createdAt,
+            createdAt: $this->clock->now(),
         );
 
         $this->repository->add($device);
