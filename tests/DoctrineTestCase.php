@@ -10,10 +10,10 @@ use App\Core\Domain\Clock\TestClock;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
 use App\Device\Application\UseCase\AddDevice\Command as AddDeviceCommand;
-use App\User\Application\UseCase\AddUser\Command as AddUserCommand;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use App\Device\Domain\Repository\DeviceRepository;
+use App\User\Application\UseCase\AddUser\Command as AddUserCommand;
 use App\User\Domain\Repository\UserRepository;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -69,8 +69,7 @@ class DoctrineTestCase extends WebTestCase
         DeviceType $deviceType,
         MACAddress $macAddress,
         ?Uuid $id,
-    ): void
-    {
+    ): void {
         $this->messageBus()->dispatch(new AddDeviceCommand(
             userId: $userId,
             name: $name,
@@ -87,8 +86,7 @@ class DoctrineTestCase extends WebTestCase
         Email $email,
         ?Uuid $userId,
         array $roles
-    ): void
-    {
+    ): void {
         $this->messageBus()->dispatch(new AddUserCommand(
             googleId: $googleId,
             firstName: $firstName,

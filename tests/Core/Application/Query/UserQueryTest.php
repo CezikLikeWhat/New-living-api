@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Core\Application\Query;
 
 use App\Core\Application\Query\UserQuery;
@@ -9,8 +11,6 @@ use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use App\Tests\DoctrineTestCase;
-use PhpParser\Comment\Doc;
-use PHPUnit\Framework\TestCase;
 
 class UserQueryTest extends DoctrineTestCase
 {
@@ -88,12 +88,11 @@ class UserQueryTest extends DoctrineTestCase
     {
         $actualUserDevices = $this->userQuery()->getAllUserDevicesByUserId($id);
 
-        for($i=0, $iMax = count($actualUserDevices); $i< $iMax; $i++){
-           self::assertEquals($expectedDevices[$i]->id, $actualUserDevices[$i]->id);
-           self::assertEquals($expectedDevices[$i]->name, $actualUserDevices[$i]->name);
-           self::assertEquals($expectedDevices[$i]->deviceType, $actualUserDevices[$i]->deviceType);
-           self::assertEquals($expectedDevices[$i]->macAddress, $actualUserDevices[$i]->macAddress);
-
+        for ($i = 0, $iMax = count($actualUserDevices); $i < $iMax; ++$i) {
+            self::assertEquals($expectedDevices[$i]->id, $actualUserDevices[$i]->id);
+            self::assertEquals($expectedDevices[$i]->name, $actualUserDevices[$i]->name);
+            self::assertEquals($expectedDevices[$i]->deviceType, $actualUserDevices[$i]->deviceType);
+            self::assertEquals($expectedDevices[$i]->macAddress, $actualUserDevices[$i]->macAddress);
         }
     }
 
@@ -106,7 +105,7 @@ class UserQueryTest extends DoctrineTestCase
                     firstName: 'Alex',
                     lastName: 'Bechtelar',
                     email: new Email('alex.bechtelar@gmail.com'),
-                )
+                ),
             ],
             [
                 Uuid4::fromString('af49b9aa-89d7-4a24-9010-c23806831e0a'),
@@ -114,7 +113,7 @@ class UserQueryTest extends DoctrineTestCase
                     firstName: 'Perry',
                     lastName: 'Kautzer',
                     email: new Email('perry.kautzer@gmail.com'),
-                )
+                ),
             ],
             [
                 Uuid4::fromString('f04c7c84-c849-4bb1-b036-73551dad2079'),
@@ -122,7 +121,7 @@ class UserQueryTest extends DoctrineTestCase
                     firstName: 'Robin',
                     lastName: 'Thiel',
                     email: new Email('robin.thiel@gmail.com'),
-                )
+                ),
             ],
         ];
     }
@@ -147,7 +146,7 @@ class UserQueryTest extends DoctrineTestCase
                         macAddress: new MACAddress('12:66:C5:ED:85:79'),
                         createdAt: new \DateTimeImmutable('15-10-2022'),
                     ),
-                ]
+                ],
             ],
             [
                 Uuid4::fromString('af49b9aa-89d7-4a24-9010-c23806831e0a'),
@@ -159,7 +158,7 @@ class UserQueryTest extends DoctrineTestCase
                         macAddress: new MACAddress('0A:AE:B9:A3:8F:04'),
                         createdAt: new \DateTimeImmutable('22-10-2022'),
                     ),
-                ]
+                ],
             ],
             [
                 Uuid4::fromString('f04c7c84-c849-4bb1-b036-73551dad2079'),
@@ -171,9 +170,8 @@ class UserQueryTest extends DoctrineTestCase
                         macAddress: new MACAddress('4A:73:E3:57:1B:E0'),
                         createdAt: new \DateTimeImmutable('10-10-2022'),
                     ),
-                ]
+                ],
             ],
         ];
     }
-
 }
