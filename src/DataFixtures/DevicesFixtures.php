@@ -29,7 +29,6 @@ class DevicesFixtures extends Fixture
             name: 'Light bulb - living room',
             deviceType: 'Light bulb',
             macAddress: '00:00:00:00:00:00',
-            createdAt: new \DateTimeImmutable('2022-10-05'),
             id: Uuid4::fromString('0ca28ec2-e9eb-4013-a121-097c380c55bd')
         );
 
@@ -38,7 +37,6 @@ class DevicesFixtures extends Fixture
             name: 'Led strip - tv',
             deviceType: 'Led strip',
             macAddress: '11:11:11:11:11:11',
-            createdAt: new \DateTimeImmutable('2022-10-06'),
             id: Uuid4::fromString('36340076-0431-4a95-8444-69cf1f3173ec')
         );
 
@@ -47,7 +45,6 @@ class DevicesFixtures extends Fixture
             name: 'Distance sensor - patio',
             deviceType: 'Distance sensor',
             macAddress: '22:22:22:22:22:22',
-            createdAt: new \DateTimeImmutable('2022-09-28'),
             id: Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb')
         );
 
@@ -56,7 +53,6 @@ class DevicesFixtures extends Fixture
             name: 'Light bulb - kitchen',
             deviceType: 'Light bulb',
             macAddress: '33:33:33:33:33:33',
-            createdAt: new \DateTimeImmutable('2022-10-10'),
         );
 
         $commandDeviceFive = new AddDeviceCommand(
@@ -64,7 +60,6 @@ class DevicesFixtures extends Fixture
             name: 'Led strip - office desk',
             deviceType: 'Led strip',
             macAddress: '44:44:44:44:44:44',
-            createdAt: new \DateTimeImmutable('2022-10-09'),
             id: Uuid4::fromString('365f42e1-4c47-4292-b788-631cb15ac7a9')
         );
 
@@ -73,7 +68,6 @@ class DevicesFixtures extends Fixture
             name: 'Camera sensor - front entrance',
             deviceType: 'Distance sensor',
             macAddress: '55:55:55:55:55:55',
-            createdAt: new \DateTimeImmutable('2022-10-03'),
             id: Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76')
         );
 
