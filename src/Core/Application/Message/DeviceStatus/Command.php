@@ -7,7 +7,6 @@ namespace App\Core\Application\Message\DeviceStatus;
 class Command
 {
     public function __construct(
-
     ) {
     }
 }
