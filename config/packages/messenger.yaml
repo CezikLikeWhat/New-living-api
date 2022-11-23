@@ -8,12 +8,14 @@ framework:
             # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
-            async_email: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async_email: '%env(MESSENGER_TRANSPORT_DSN_EMAIL)%'
+            async_queue: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_DEVICE_STATUS)%'
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async_email
+            'App\Core\Application\Message\DeviceStatus\Command': async_queue
 
         buses:
             messenger.bus.default:

@@ -23,9 +23,23 @@ services:
     ports:
       - "1025"
       - "1080"
+  rabbitmq:
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:15672" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
 
 volumes:
   new-living-db-volume:
+  rabbitmq-data:
+  rabbitmq-log:
 
 networks:
   default:
