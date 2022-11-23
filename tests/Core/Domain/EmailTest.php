@@ -54,7 +54,7 @@ class EmailTest extends TestCase
             ['2gmail.com'],
             ['email@.gmail'],
             ['gmail.com@'],
-            ['www.test@pl.wp'],
+            ['www.test@pl.wp@.pl'],
             ['2test123@@gmail.com'],
         ];
     }
