@@ -21,3 +21,10 @@ services:
 
   new-living-mailer:
     image: schickling/mailcatcher
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    #    image: rabbitmq
+#    build:
+#      context: .
+#      dockerfile: docker/rabbitmq/Dockerfile
