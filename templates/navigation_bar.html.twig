@@ -6,24 +6,24 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('load_main_panel') }}">Home</a>
+                        <a class="nav-link" href="{{ path('load_dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('load_dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ path('devices') }}">Devices</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('load_user_profile') }}">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('load_main_panel') }}">Settings</a> {# TODO: ZMIENIC LINK NA COŚ SENSOWNEGO #}
+                        <a class="nav-link" href="{{ path('load_main_panel') }}">Settings</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             About
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('load_main_panel') }}">Application</a></li> {# TODO: ZMIENIC LINK NA COŚ SENSOWNEGO #}
-                            <li><a class="dropdown-item" href="{{ path('load_main_panel') }}">Author</a></li> {# TODO: ZMIENIC LINK NA COŚ SENSOWNEGO #}
+                            <li><a class="dropdown-item" href="{{ path('load_application_panel') }}">Application</a></li>
+                            <li><a class="dropdown-item" href="{{ path('load_author_panel') }}">Author</a></li>
                         </ul>
                     </li>
 
