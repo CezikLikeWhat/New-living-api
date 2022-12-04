@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Infrastructure\Doctrine\Query;
 
 use App\Core\Application\Query\UserQuery;
+use App\Core\Application\Query\UserQuery\MostPopularDeviceType;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
 use App\Core\Infrastructure\Symfony\Uuid4;
@@ -12,6 +13,7 @@ use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use InvalidArgumentException;
 
 class DBALUserQuery implements UserQuery
 {
@@ -75,5 +77,81 @@ class DBALUserQuery implements UserQuery
             macAddress: new MACAddress($device['mac_address']),
             createdAt: \DateTimeImmutable::createFromFormat('Y-m-d', $device['created_at']) ?: new DateTimeImmutable()
         ), $data);
+    }
+
+    public function getMostPopularUserDevicesType(Uuid $id): MostPopularDeviceType
+    {
+        /** @var array{
+         *     id: string,
+         *     device_type: string
+         * }[] $data
+         */
+        $data = $this->connection->fetchAllAssociative('
+            SELECT d.id, d.device_type
+            FROM devices d
+            WHERE d.user_id = :userID
+        ', [
+            'userID' => $id,
+        ]);
+
+        /** @var non-empty-array<string, int> $counterArray */
+        $counterArray = [];
+        foreach ($data as $device) {
+            if (!array_key_exists($device['device_type'], $counterArray)) {
+                $counterArray[$device['device_type']] = 1;
+                continue;
+            }
+            ++$counterArray[$device['device_type']];
+        }
+        $quantity = max($counterArray);
+        $deviceType = array_search($quantity, $counterArray, true);
+
+        if (!$deviceType) {
+            throw new InvalidArgumentException();
+        }
+
+        return new MostPopularDeviceType($deviceType, $quantity);
+    }
+
+    public function getNumberOfAllUsers(): int
+    {
+        /** @var array{ number_of_devices: int } $data */
+        $data = $this->connection->fetchAssociative('
+            SELECT COUNT(d.id) as number_of_devices
+            FROM devices d
+        ');
+
+        return $data['number_of_devices'];
+    }
+
+    public function getMostPopularDevicesType(): MostPopularDeviceType
+    {
+        /** @var array{
+         *     id: string,
+         *     device_type: string
+         * }[] $data
+         */
+        $data = $this->connection->fetchAllAssociative('
+            SELECT d.id, d.device_type
+            FROM devices d
+        ');
+
+        /** @var non-empty-array<string, int> $counterArray */
+        $counterArray = [];
+        foreach ($data as $device) {
+            if (!array_key_exists($device['device_type'], $counterArray)) {
+                $counterArray[$device['device_type']] = 1;
+                continue;
+            }
+            ++$counterArray[$device['device_type']];
+        }
+        $quantity = max($counterArray);
+        $deviceType = array_search($quantity, $counterArray, true);
+
+        if (!$deviceType) {
+            throw new InvalidArgumentException();
+        }
+
+        return new MostPopularDeviceType($deviceType, $quantity);
     }
 }
