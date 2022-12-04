@@ -1,0 +1,44 @@
+
+{% block stylesheets %}
+    <style>
+        #container{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 90%;
+            margin-inline: auto;
+            gap: 1rem;
+        }
+        #column{
+            border-radius: 10px;
+            background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+            padding: 20px 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="column" class="col col-md-5">
+
+        <div id="container" class="container-fluid">
+
+            <i class="fa-solid {{ icon }} fa-3x"></i>
+
+            <div>
+                <h3>{{ name }}</h3>
+                {% if amount.type is defined %}
+                    <span>Type: {{ amount.type }}</span><br/>
+                    <span>Quantity: {{ amount.quantity }}</span>
+                {% else %}
+                    <span>{{ amount }}</span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

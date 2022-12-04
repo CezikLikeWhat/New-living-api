@@ -2,10 +2,41 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #cards{
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+        }
+        #row{
+            gap: 1.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 
     {{ include('navigation_bar.html.twig') }}
+    {% set arrayOfCardsData = [
+        userDevices,
+        numberOfUsers,
+        mostPopularUserDevicesType,
+        mostPopularDevicesType
+    ] %}
 
-    <h1>Dashboard</h1>
+    <div class="container-fluid" id="cards">
+        <div class="row" id="row">
+            {% for element in arrayOfCardsData %}
+                {% include 'Dashboard/card.html.twig' with element %}
+            {% endfor %}
+        </div>
+    </div>
+
 
 {% endblock %}
