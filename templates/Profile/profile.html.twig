@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+
+    {% set array = [
+        {'categoryName': 'Ogólne', 'textFields': [{'fieldLabel': 'cos','fieldName': 'nazwa', 'fieldValue': '', 'fieldPlaceholder': 'Test placeholder','fieldType': 'text'},{'fieldLabel': 'cos','fieldName': 'Nazwa 2', 'fieldValue': '', 'fieldPlaceholder': 'Test placeholder','fieldType': 'password'}]},
+    ] %}
+
+    <div class="container-fluid" style="margin-top: 20px">
+        {% for element in array %}
+            {% include 'profile_category.html.twig' with element %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
