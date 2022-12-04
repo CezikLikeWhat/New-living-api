@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Application {% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <style>
+        #application-container{
+            justify-content: center;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        #image{
+            box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        #image-container{
+            box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        #logo{
+            width: 300px;
+            height: 300px;
+            border-radius: inherit;
+            border: 1px solid aqua;
+        }
+        #textarea{
+            box-shadow: 0 0 10px 5px rgba(129, 129, 152, 1);
+            background-color: rgba(248, 249, 250, 1);
+            border-radius: 16px;
+            padding: 15px 10px;
+            width: 50%;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    <div id="application-container" class="container-fluid">
+
+        <div id="image-container" class="row">
+            <div id="image">
+                <img id="logo" src="{{ asset('New_Living.png') }}" alt="new_living_logo">
+            </div>
+        </div>
+
+        <div id="textarea" class="row">
+            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu tortor pulvinar, ultricies ligula vel, tincidunt nisl. Cras at odio ac risus porta euismod. Ut finibus a sapien vitae interdum. Phasellus id pellentesque dolor. Ut in commodo metus, eget placerat turpis. Donec ut hendrerit purus. Fusce sollicitudin pellentesque ligula, vel egestas mauris convallis nec. Nam efficitur sodales laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vulputate felis quam, at aliquam dolor porta ut. Interdum et malesuada fames ac ante ipsum primis in faucibus.</span>
+        </div>
+
+    </div>
+
+{% endblock %}
