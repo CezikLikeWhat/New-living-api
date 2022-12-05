@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Doctrine\Query;
 
+use App\Core\Application\Query\Exceptions\DeviceTypeCannotBeFound;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Application\Query\UserQuery\MostPopularDeviceType;
 use App\Core\Domain\Email;
@@ -103,12 +104,11 @@ class DBALUserQuery implements UserQuery
             }
             ++$counterArray[$device['device_type']];
         }
-        $quantity = max($counterArray);
-        $deviceType = array_search($quantity, $counterArray, true);
 
-        if (!$deviceType) {
-            throw new InvalidArgumentException();
-        }
+        $userHasAnyDevices = count($counterArray) === 0;
+
+        $quantity = !$userHasAnyDevices ? max($counterArray) : 0;
+        $deviceType =  !$userHasAnyDevices ? array_search($quantity, $counterArray, true) : '';
 
         return new MostPopularDeviceType($deviceType, $quantity);
     }
@@ -145,12 +145,11 @@ class DBALUserQuery implements UserQuery
             }
             ++$counterArray[$device['device_type']];
         }
-        $quantity = max($counterArray);
-        $deviceType = array_search($quantity, $counterArray, true);
 
-        if (!$deviceType) {
-            throw new InvalidArgumentException();
-        }
+        $systemHasAnyDevices = count($counterArray) === 0;
+
+        $quantity = !$systemHasAnyDevices ? max($counterArray) : 0;
+        $deviceType =  !$systemHasAnyDevices ? array_search($quantity, $counterArray, true) : '';
 
         return new MostPopularDeviceType($deviceType, $quantity);
     }
