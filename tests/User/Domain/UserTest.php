@@ -6,11 +6,12 @@ namespace App\Tests\User\Domain;
 
 use App\Core\Domain\Email;
 use App\Core\Infrastructure\Symfony\Uuid4;
+use App\Tests\DoctrineTestCase;
 use App\User\Domain\Exception\UserException;
 use App\User\Domain\User;
 use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase
+class UserTest extends DoctrineTestCase
 {
     /** @dataProvider provideValidFirstNameAndLastName */
     public function testThatPersonalDataAreValid(string $firstName, string $lastName): void
@@ -22,6 +23,7 @@ class UserTest extends TestCase
             $firstName,
             $lastName,
             new Email('test@gmail.com'),
+            $this->clock()->now(),
             ['ROLE_USER']
         );
 
@@ -38,6 +40,7 @@ class UserTest extends TestCase
             $firstName,
             $lastName,
             new Email('test@gmail.com'),
+            $this->clock()->now(),
             ['ROLE_USER']
         );
         self::assertTrue(true);
