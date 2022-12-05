@@ -28,9 +28,11 @@
 
             <div>
                 <h3>{{ name }}</h3>
-                {% if amount.type is defined %}
+                {% if amount.type is defined and amount.type != '' %}
                     <span>Type: {{ amount.type }}</span><br/>
                     <span>Quantity: {{ amount.quantity }}</span>
+                {% elseif amount.type is defined and amount.type == '' %}
+                    <span>Nie posiadasz żadnego urządzenia</span>
                 {% else %}
                     <span>{{ amount }}</span>
                 {% endif %}
