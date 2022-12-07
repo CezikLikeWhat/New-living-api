@@ -11,7 +11,7 @@ class UserNotFound extends \Exception
     public static function bySystemId(Uuid $id): self
     {
         return new self(
-            sprintf('User with id: %s not found', $id)
+            sprintf('User with id: %s not found', $id->toString())
         );
     }
 }
