@@ -95,6 +95,10 @@ class DBALUserQuery implements UserQuery
             'userID' => $id,
         ]);
 
+        if(!$data){
+            return new MostPopularDeviceType('', 0);
+        }
+
         /** @var non-empty-array<string, int> $counterArray */
         $counterArray = [];
         foreach ($data as $device) {
@@ -105,10 +109,9 @@ class DBALUserQuery implements UserQuery
             ++$counterArray[$device['device_type']];
         }
 
-        $userHasAnyDevices = count($counterArray) === 0;
-
-        $quantity = !$userHasAnyDevices ? max($counterArray) : 0;
-        $deviceType =  !$userHasAnyDevices ? array_search($quantity, $counterArray, true) : '';
+        $quantity = max($counterArray);
+        /** @var string $deviceType */
+        $deviceType = array_search($quantity,$counterArray,true);
 
         return new MostPopularDeviceType($deviceType, $quantity);
     }
@@ -136,6 +139,10 @@ class DBALUserQuery implements UserQuery
             FROM devices d
         ');
 
+        if(!$data){
+            return new MostPopularDeviceType('', 0);
+        }
+
         /** @var non-empty-array<string, int> $counterArray */
         $counterArray = [];
         foreach ($data as $device) {
@@ -146,10 +153,9 @@ class DBALUserQuery implements UserQuery
             ++$counterArray[$device['device_type']];
         }
 
-        $systemHasAnyDevices = count($counterArray) === 0;
-
-        $quantity = !$systemHasAnyDevices ? max($counterArray) : 0;
-        $deviceType =  !$systemHasAnyDevices ? array_search($quantity, $counterArray, true) : '';
+        $quantity = max($counterArray);
+        /** @var string $deviceType */
+        $deviceType = array_search($quantity, $counterArray, true);
 
         return new MostPopularDeviceType($deviceType, $quantity);
     }
