@@ -9,7 +9,6 @@ use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Tests\DoctrineTestCase;
 use App\User\Domain\Exception\UserException;
 use App\User\Domain\User;
-use PHPUnit\Framework\TestCase;
 
 class UserTest extends DoctrineTestCase
 {
