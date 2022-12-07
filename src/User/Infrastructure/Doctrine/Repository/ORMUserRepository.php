@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Doctrine\Repository;
 
+use App\Core\Domain\Uuid;
 use App\User\Domain\Repository\UserRepository;
 use App\User\Domain\User;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,5 +26,12 @@ class ORMUserRepository implements UserRepository
         return $this->registry
             ->getRepository(User::class)
             ->findOneBy(['googleId' => $userID]);
+    }
+
+    public function findBySystemId(Uuid $userID): ?User
+    {
+        return $this->registry
+            ->getRepository(User::class)
+            ->findOneBy(['id' => $userID]);
     }
 }
