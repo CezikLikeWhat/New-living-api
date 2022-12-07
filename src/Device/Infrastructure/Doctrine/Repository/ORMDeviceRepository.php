@@ -6,6 +6,7 @@ namespace App\Device\Infrastructure\Doctrine\Repository;
 
 use App\Core\Domain\Uuid;
 use App\Device\Domain\Device;
+use App\Device\Domain\Exception\DeviceNotFound;
 use App\Device\Domain\Repository\DeviceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,5 +27,18 @@ class ORMDeviceRepository implements DeviceRepository
         return $this->registry
             ->getRepository(Device::class)
             ->findOneBy(['id' => $deviceID]);
+    }
+
+    public function remove(Uuid $deviceID): void
+    {
+        $device = $this->findById($deviceID);
+
+        if(!$device){
+            throw DeviceNotFound::byId($deviceID);
+        }
+
+        $this->registry
+            ->getManager()
+            ->remove($device);
     }
 }
