@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Doctrine\Query;
 
-use App\Core\Application\Query\Exceptions\DeviceTypeCannotBeFound;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Application\Query\UserQuery\MostPopularDeviceType;
 use App\Core\Domain\Email;
@@ -14,7 +13,6 @@ use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
-use InvalidArgumentException;
 
 class DBALUserQuery implements UserQuery
 {
@@ -95,7 +93,7 @@ class DBALUserQuery implements UserQuery
             'userID' => $id,
         ]);
 
-        if(!$data){
+        if (!$data) {
             return new MostPopularDeviceType('', 0);
         }
 
@@ -111,7 +109,7 @@ class DBALUserQuery implements UserQuery
 
         $quantity = max($counterArray);
         /** @var string $deviceType */
-        $deviceType = array_search($quantity,$counterArray,true);
+        $deviceType = array_search($quantity, $counterArray, true);
 
         return new MostPopularDeviceType($deviceType, $quantity);
     }
@@ -139,7 +137,7 @@ class DBALUserQuery implements UserQuery
             FROM devices d
         ');
 
-        if(!$data){
+        if (!$data) {
             return new MostPopularDeviceType('', 0);
         }
 
