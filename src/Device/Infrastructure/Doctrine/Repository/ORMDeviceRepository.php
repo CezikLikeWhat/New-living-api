@@ -33,7 +33,7 @@ class ORMDeviceRepository implements DeviceRepository
     {
         $device = $this->findById($deviceID);
 
-        if(!$device){
+        if (!$device) {
             throw DeviceNotFound::byId($deviceID);
         }
 
