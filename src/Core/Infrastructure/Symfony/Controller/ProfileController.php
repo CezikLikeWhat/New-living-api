@@ -25,7 +25,7 @@ class ProfileController extends AbstractController
         $userInfo = $this->userQuery->getAllUserInformationsByUserId($user->systemIdentifier());
         $userDevices = $this->userQuery->getAllUserDevicesByUserId($user->systemIdentifier());
 
-        return $this->render('profile.html.twig', [
+        return $this->render('Profile/profile.html.twig', [
             'user' => $userInfo,
             'userDevices' => $userDevices,
         ]);

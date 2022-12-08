@@ -14,7 +14,6 @@ class AuthorPanelController extends AbstractController
     public function loadAuthorPanel(): Response
     {
         return $this->render('author.html.twig', [
-
         ]);
     }
 }

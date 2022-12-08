@@ -14,7 +14,6 @@ class ApplicationController extends AbstractController
     public function loadApplicationPanel(): Response
     {
         return $this->render('application.html.twig', [
-
         ]);
     }
 }

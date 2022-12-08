@@ -62,13 +62,14 @@ class DashboardController extends AbstractController
         $numberOfUsersInSystem = $this->userQuery->getNumberOfAllUsers();
         $mostPopularDevicesTypeInSystem = $this->userQuery->getMostPopularDevicesType();
 
-        return $this->json([
+        return $this->json(
+            [
             'numberOfUserDevices' => $numberOfUserDevices,
             'mostPopularUserDevicesType' => $mostPopularUserDevicesType,
             'numberOfUsersInSystem' => $numberOfUsersInSystem,
-            'mostPopularDevicesTypeInSystem' => $mostPopularDevicesTypeInSystem
+            'mostPopularDevicesTypeInSystem' => $mostPopularDevicesTypeInSystem,
         ],
-        Response::HTTP_OK
+            Response::HTTP_OK
         );
     }
 }
