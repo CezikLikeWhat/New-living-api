@@ -27,7 +27,7 @@ class ORMDeviceFeatureRepository implements DeviceFeatureRepository
             ->getRepository(DeviceFeature::class)
             ->findOneBy([
                 'featureId' => $featureId,
-                'deviceId' => $deviceId
+                'deviceId' => $deviceId,
             ]);
     }
 }

@@ -79,7 +79,7 @@ class DevicesFeaturesFixtures extends Fixture
             ],
             id: Uuid4::fromString('1acb0b73-ef27-416c-b643-f4bd44893b1e'),
         );
-        # LED strips
+        // LED strips
         $commandDevicesFeaturesSeven = new AddDeviceFeatureCommand(
             featureId: Uuid4::fromString('4d5af1d8-fe64-4868-9377-4ed325da88bb'),
             deviceId: Uuid4::fromString('36340076-0431-4a95-8444-69cf1f3173ec'),
@@ -88,8 +88,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'OFF',
                 'solid_color' => [
                     'status' => 'ON',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('899bc67c-7166-4c9c-9c2f-57406373096d'),
         );
@@ -101,8 +101,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'OFF',
                 'solid_color' => [
                     'status' => 'ON',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('902e8108-cf54-4ab0-9d05-e174c8060cf4'),
         );
@@ -114,8 +114,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'OFF',
                 'solid_color' => [
                     'status' => 'ON',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('cb9e8557-e415-45a6-8c10-6ebebe067038'),
         );
@@ -127,8 +127,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'ON',
                 'solid_color' => [
                     'status' => 'OFF',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('ac469891-ebc0-460c-a72d-04d9eb8c5a4d'),
         );
@@ -140,8 +140,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'ON',
                 'solid_color' => [
                     'status' => 'OFF',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('aac22987-24ed-4348-bd25-4dd0e0a7bd79'),
         );
@@ -153,8 +153,8 @@ class DevicesFeaturesFixtures extends Fixture
                 'ambient_mode' => 'ON',
                 'solid_color' => [
                     'status' => 'OFF',
-                    'color' => 'GREEN'
-                ]
+                    'color' => 'GREEN',
+                ],
             ],
             id: Uuid4::fromString('87dc0f79-4739-4082-91ff-44b6b0b5a968'),
         );
@@ -164,7 +164,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb'),
             payload: [
                 'status' => 'ON',
-                'detection_distance' => 25
+                'detection_distance' => 25,
             ],
             id: Uuid4::fromString('b332f520-d2e8-4741-9139-e718f934fcea'),
         );
@@ -173,7 +173,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb'),
             payload: [
                 'status' => 'ON',
-                'detection_distance' => 25
+                'detection_distance' => 25,
             ],
             id: Uuid4::fromString('d1723660-bedb-4ed9-a7da-cc5da0823931'),
         );
@@ -182,7 +182,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('6e2aae94-41fc-4765-b007-46f1994d0beb'),
             payload: [
                 'status' => 'ON',
-                'detection_distance' => 25
+                'detection_distance' => 25,
             ],
             id: Uuid4::fromString('84a0879d-1378-46b0-9996-512f0b4f9a4a'),
         );
@@ -191,7 +191,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76'),
             payload: [
                 'status' => 'OFF',
-                'detection_distance' => 50
+                'detection_distance' => 50,
             ],
             id: Uuid4::fromString('47eb0a2e-fa7e-4d36-8839-2f2903990b23'),
         );
@@ -200,7 +200,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76'),
             payload: [
                 'status' => 'OFF',
-                'detection_distance' => 50
+                'detection_distance' => 50,
             ],
             id: Uuid4::fromString('25de233a-c781-4534-895f-df4668ff42a9'),
         );
@@ -209,7 +209,7 @@ class DevicesFeaturesFixtures extends Fixture
             deviceId: Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76'),
             payload: [
                 'status' => 'OFF',
-                'detection_distance' => 50
+                'detection_distance' => 50,
             ],
             id: Uuid4::fromString('583d9f65-81a6-44ba-84ed-9cfeb12c7285'),
         );
