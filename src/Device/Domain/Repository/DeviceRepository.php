@@ -12,10 +12,10 @@ interface DeviceRepository
 {
     public function add(Device $device): void;
 
-    public function findById(Uuid $deviceID): ?Device;
+    public function findById(Uuid $deviceId): ?Device;
 
     /**
      * @throws DeviceNotFound
      */
-    public function remove(Uuid $deviceID): void;
+    public function remove(Uuid $deviceId): void;
 }

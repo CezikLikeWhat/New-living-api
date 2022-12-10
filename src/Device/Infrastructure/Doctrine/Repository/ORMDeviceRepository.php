@@ -22,19 +22,19 @@ class ORMDeviceRepository implements DeviceRepository
         $this->registry->getManager()->persist($device);
     }
 
-    public function findById(Uuid $deviceID): ?Device
+    public function findById(Uuid $deviceId): ?Device
     {
         return $this->registry
             ->getRepository(Device::class)
-            ->findOneBy(['id' => $deviceID]);
+            ->findOneBy(['id' => $deviceId]);
     }
 
-    public function remove(Uuid $deviceID): void
+    public function remove(Uuid $deviceId): void
     {
-        $device = $this->findById($deviceID);
+        $device = $this->findById($deviceId);
 
         if (!$device) {
-            throw DeviceNotFound::byId($deviceID);
+            throw DeviceNotFound::byId($deviceId);
         }
 
         $this->registry
