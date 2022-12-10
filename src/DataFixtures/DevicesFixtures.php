@@ -53,6 +53,7 @@ class DevicesFixtures extends Fixture
             name: 'Light bulb - kitchen',
             deviceType: 'Light bulb',
             macAddress: '33:33:33:33:33:33',
+            id: Uuid4::fromString('bbf513f0-9c0b-48ac-a1a5-c47f05abe019')
         );
 
         $commandDeviceFive = new AddDeviceCommand(
