@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Device {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        #content{
+            margin-top: 20px;
+        }
+        #category{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    {% set array = [
+        {'categoryName': 'General', 'textFields': [
+            {'fieldLabel': 'Name','fieldName': 'name', 'fieldValue': '', 'fieldPlaceholder': 'Device name','fieldType': 'text'},
+            {'fieldLabel': 'Type','fieldName': 'type', 'fieldValue': '', 'fieldPlaceholder': 'Device Type','fieldType': 'text'},
+            {'fieldLabel': 'MAC Address','fieldName': 'mac', 'fieldValue': '', 'fieldPlaceholder': 'Device MAC Address','fieldType': 'text'}
+        ]}
+    ] %}
+
+    <div class="container-fluid" id="content">
+        {% for element in array %}
+            {% include 'Profile/profile_category.html.twig' with element %}
+        {% endfor %}
+
+
+        <div class="container-fluid" id="category" >
+            <div class="col col-md-12">
+                <h3>Features</h3>
+            </div>
+
+            <div class="col col-md-12" style="display: flex; justify-content: flex-end">
+                <div class="col col-md-9">
+                    <div class="container-fluid">
+                        {% for element in device.features %}
+                            {% include '/Devices/device_feature.html.twig' with element %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+

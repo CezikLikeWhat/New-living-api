@@ -1,0 +1,33 @@
+
+{% block body %}
+
+    <div class="row profile-field">
+        <h5>{{ feature_name }}</h5>
+    </div>
+
+    <div class="row">
+
+        {% if display_type == 'toggle' %}
+            <input type="checkbox" checked="{{ payload.status == 'ON' }}" class="btn-check" id="btn-check" autocomplete="off" />
+            <label class="btn btn-primary" for="btn-check">Single toggle</label>
+            {% elseif display_type == 'select' %}
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect">
+                        <option selected>Choose the color of light bulb</option>
+                        <option value="Red">Red</option>
+                        <option value="Green">Green</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Yello">Yellow</option>
+                    </select>
+                    <label for="floatingSelect">Select</label>
+                </div>
+            {% else %}
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+
