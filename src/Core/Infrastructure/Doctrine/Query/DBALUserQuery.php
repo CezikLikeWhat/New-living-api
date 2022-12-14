@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Infrastructure\Doctrine\Query;
 
 use App\Core\Application\Query\UserQuery;
+use App\Core\Application\Query\UserQuery\DeviceWithFeatures;
 use App\Core\Application\Query\UserQuery\MostPopularDeviceType;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
@@ -156,5 +157,53 @@ class DBALUserQuery implements UserQuery
         $deviceType = array_search($quantity, $counterArray, true);
 
         return new MostPopularDeviceType($deviceType, $quantity);
+    }
+
+    public function getDeviceInformationById(Uuid $deviceId): DeviceWithFeatures
+    {
+        /** @var array{
+         *     device_name: string,
+         *     device_type: string,
+         *     mac_address: string,
+         *     created_at: string,
+         *     payload: string,
+         *     feature_name: string,
+         *     display_type: string
+         * }[] $data
+         */
+        $data = $this->connection->fetchAssociative('
+            SELECT d.name as device_name, d.device_type, d.mac_address, d.created_at
+            FROM devices d
+        ');
+
+        $data2 = $this->connection->fetchAllAssociative('
+            SELECT df.payload,
+                   f.name, f.display_type
+            FROM devices_features df
+            INNER JOIN features f on df.feature_id = f.feature_id
+            WHERE df.device_id = :deviceId
+        ', [
+            'deviceId' => $deviceId
+        ]);
+
+        $arrayxd = [];
+
+        foreach ($data2 as $item){
+            $arrayxd[] = [
+                'feature_name' => $item['name'],
+                'display_type' => $item['display_type'],
+                'payload' => json_decode($item['payload'], true, 512, JSON_THROW_ON_ERROR),
+            ];
+        }
+
+
+        return new DeviceWithFeatures(
+            $data['device_name'],
+            DeviceType::fromString($data['device_type']),
+            new MACAddress($data['mac_address']),
+            new DateTimeImmutable($data['created_at']),
+            $arrayxd,
+        );
+
     }
 }
