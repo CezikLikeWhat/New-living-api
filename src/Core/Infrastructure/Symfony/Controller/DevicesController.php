@@ -24,22 +24,20 @@ class DevicesController extends AbstractController
     {
         $userDevices = $this->userQuery->getAllUserDevicesByUserId($user->systemIdentifier());
 
-        return $this->render('devices.html.twig', [
-            'userDevices' => $userDevices,
+        return $this->render('Devices/devices.html.twig', [
+            'devices' => $userDevices,
         ]);
     }
 
-    #[Route('/devices/{id}', name: 'get_user_devices_data', methods: ['GET'])]
-    public function getUserDevicesData(string $id): Response
+    #[Route('/devices/{id}', name: 'specific_device', methods: ['GET'])]
+    public function specificDevice(string $id, #[CurrentUser] User $user): Response
     {
-        $systemIdentifier = Uuid4::fromString($id);
-        $userDevices = $this->userQuery->getAllUserDevicesByUserId($systemIdentifier);
+        $device = $this->userQuery->getDeviceInformationById(Uuid4::fromString($id));
 
-        return $this->json(
-            [
-                'userDevices' => $userDevices,
-            ],
-            Response::HTTP_OK
-        );
+        return $this->render('Devices/device_info.html.twig', [
+            'device' => $device,
+        ]);
     }
+
+
 }
