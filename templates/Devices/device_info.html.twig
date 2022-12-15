@@ -24,9 +24,9 @@
 
     {% set array = [
         {'categoryName': 'General', 'textFields': [
-            {'fieldLabel': 'Name','fieldName': 'name', 'fieldValue': '', 'fieldPlaceholder': 'Device name','fieldType': 'text'},
-            {'fieldLabel': 'Type','fieldName': 'type', 'fieldValue': '', 'fieldPlaceholder': 'Device Type','fieldType': 'text'},
-            {'fieldLabel': 'MAC Address','fieldName': 'mac', 'fieldValue': '', 'fieldPlaceholder': 'Device MAC Address','fieldType': 'text'}
+            {'fieldLabel': 'Name','fieldName': 'name', 'fieldValue':  device.deviceName, 'fieldPlaceholder': 'Device name','fieldType': 'text'},
+            {'fieldLabel': 'Type','fieldName': 'type', 'fieldValue': device.deviceType.value, 'fieldPlaceholder': 'Device Type','fieldType': 'text'},
+            {'fieldLabel': 'MAC Address','fieldName': 'mac', 'fieldValue': device.macAddress, 'fieldPlaceholder': 'Device MAC Address','fieldType': 'text'}
         ]}
     ] %}
 
