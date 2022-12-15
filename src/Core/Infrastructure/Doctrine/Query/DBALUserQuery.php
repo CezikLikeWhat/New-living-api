@@ -5,14 +5,8 @@ declare(strict_types=1);
 namespace App\Core\Infrastructure\Doctrine\Query;
 
 use App\Core\Application\Query\UserQuery;
-use App\Core\Application\Query\UserQuery\DeviceWithFeatures;
-use App\Core\Application\Query\UserQuery\MostPopularDeviceType;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
-use App\Core\Infrastructure\Symfony\Uuid4;
-use App\Device\Domain\DeviceType;
-use App\Device\Domain\MACAddress;
-use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 class DBALUserQuery implements UserQuery
@@ -47,74 +41,6 @@ class DBALUserQuery implements UserQuery
         );
     }
 
-    public function getAllUserDevicesByUserId(Uuid $id): array
-    {
-        /** @var array{
-         *     id: string,
-         *     name: string,
-         *     device_type: string,
-         *     mac_address: string,
-         *     created_at: string
-         * }[] $data
-         */
-        $data = $this->connection->fetchAllAssociative('
-            SELECT d.id, 
-                   d.name, 
-                   d.device_type,
-                   d.mac_address,
-                   d.created_at
-            FROM devices d
-            WHERE d.user_id = :userId
-            ORDER BY d.created_at
-        ', [
-            'userId' => $id->toString(),
-        ]);
-
-        return array_map(static fn (array $device) => new UserQuery\Device(
-            id: Uuid4::FromString($device['id']),
-            name: $device['name'],
-            deviceType: DeviceType::fromString($device['device_type']),
-            macAddress: new MACAddress($device['mac_address']),
-            createdAt: \DateTimeImmutable::createFromFormat('Y-m-d', $device['created_at']) ?: new DateTimeImmutable()
-        ), $data);
-    }
-
-    public function getMostPopularUserDevicesType(Uuid $id): MostPopularDeviceType
-    {
-        /** @var array{
-         *     id: string,
-         *     device_type: string
-         * }[] $data
-         */
-        $data = $this->connection->fetchAllAssociative('
-            SELECT d.id, d.device_type
-            FROM devices d
-            WHERE d.user_id = :userID
-        ', [
-            'userID' => $id,
-        ]);
-
-        if (!$data) {
-            return new MostPopularDeviceType('', 0);
-        }
-
-        /** @var non-empty-array<string, int> $counterArray */
-        $counterArray = [];
-        foreach ($data as $device) {
-            if (!array_key_exists($device['device_type'], $counterArray)) {
-                $counterArray[$device['device_type']] = 1;
-                continue;
-            }
-            ++$counterArray[$device['device_type']];
-        }
-
-        $quantity = max($counterArray);
-        /** @var string $deviceType */
-        $deviceType = array_search($quantity, $counterArray, true);
-
-        return new MostPopularDeviceType($deviceType, $quantity);
-    }
-
     public function getNumberOfAllUsers(): int
     {
         /** @var array{ number_of_devices: int } $data */
@@ -124,86 +50,5 @@ class DBALUserQuery implements UserQuery
         ');
 
         return $data['number_of_devices'];
-    }
-
-    public function getMostPopularDevicesType(): MostPopularDeviceType
-    {
-        /** @var array{
-         *     id: string,
-         *     device_type: string
-         * }[] $data
-         */
-        $data = $this->connection->fetchAllAssociative('
-            SELECT d.id, d.device_type
-            FROM devices d
-        ');
-
-        if (!$data) {
-            return new MostPopularDeviceType('', 0);
-        }
-
-        /** @var non-empty-array<string, int> $counterArray */
-        $counterArray = [];
-        foreach ($data as $device) {
-            if (!array_key_exists($device['device_type'], $counterArray)) {
-                $counterArray[$device['device_type']] = 1;
-                continue;
-            }
-            ++$counterArray[$device['device_type']];
-        }
-
-        $quantity = max($counterArray);
-        /** @var string $deviceType */
-        $deviceType = array_search($quantity, $counterArray, true);
-
-        return new MostPopularDeviceType($deviceType, $quantity);
-    }
-
-    public function getDeviceInformationById(Uuid $deviceId): DeviceWithFeatures
-    {
-        /** @var array{
-         *     device_name: string,
-         *     device_type: string,
-         *     mac_address: string,
-         *     created_at: string,
-         *     payload: string,
-         *     feature_name: string,
-         *     display_type: string
-         * }[] $data
-         */
-        $data = $this->connection->fetchAssociative('
-            SELECT d.name as device_name, d.device_type, d.mac_address, d.created_at
-            FROM devices d
-        ');
-
-        $data2 = $this->connection->fetchAllAssociative('
-            SELECT df.payload,
-                   f.name, f.display_type
-            FROM devices_features df
-            INNER JOIN features f on df.feature_id = f.feature_id
-            WHERE df.device_id = :deviceId
-        ', [
-            'deviceId' => $deviceId
-        ]);
-
-        $arrayxd = [];
-
-        foreach ($data2 as $item){
-            $arrayxd[] = [
-                'feature_name' => $item['name'],
-                'display_type' => $item['display_type'],
-                'payload' => json_decode($item['payload'], true, 512, JSON_THROW_ON_ERROR),
-            ];
-        }
-
-
-        return new DeviceWithFeatures(
-            $data['device_name'],
-            DeviceType::fromString($data['device_type']),
-            new MACAddress($data['mac_address']),
-            new DateTimeImmutable($data['created_at']),
-            $arrayxd,
-        );
-
     }
 }
