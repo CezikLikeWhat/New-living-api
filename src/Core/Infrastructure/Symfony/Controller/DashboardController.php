@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Symfony\Controller;
 
+use App\Core\Application\Query\DeviceQuery;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Security\Infrastructure\Symfony\User\User;
@@ -15,18 +16,19 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class DashboardController extends AbstractController
 {
     public function __construct(
-        private readonly UserQuery $userQuery
+        private readonly UserQuery $userQuery,
+        private readonly DeviceQuery $deviceQuery,
     ) {
     }
 
     #[Route('/dashboard', name: 'load_dashboard', methods: ['GET'])]
     public function loadDashboard(#[CurrentUser] User $user): Response
     {
-        $numberOfUserDevices = count($this->userQuery->getAllUserDevicesByUserId($user->systemIdentifier()));
-        $mostPopularUserDevicesType = $this->userQuery->getMostPopularUserDevicesType($user->systemIdentifier());
+        $numberOfUserDevices = count($this->deviceQuery->getAllDevicesByUserId($user->systemIdentifier()));
+        $mostPopularUserDevicesType = $this->deviceQuery->getMostPopularDeviceTypeByUserId($user->systemIdentifier());
 
         $numberOfUsersInSystem = $this->userQuery->getNumberOfAllUsers();
-        $mostPopularDevicesTypeInSystem = $this->userQuery->getMostPopularDevicesType();
+        $mostPopularDevicesTypeInSystem = $this->deviceQuery->getMostPopularDeviceType();
 
         return $this->render('Dashboard/dashboard.html.twig', [
             'userDevices' => [
@@ -56,11 +58,11 @@ class DashboardController extends AbstractController
     public function getDashboardData(string $id): Response
     {
         $systemIdentifier = Uuid4::fromString($id);
-        $numberOfUserDevices = count($this->userQuery->getAllUserDevicesByUserId($systemIdentifier));
-        $mostPopularUserDevicesType = $this->userQuery->getMostPopularUserDevicesType($systemIdentifier);
+        $numberOfUserDevices = count($this->deviceQuery->getAllDevicesByUserId($systemIdentifier));
+        $mostPopularUserDevicesType = $this->deviceQuery->getMostPopularDeviceTypeByUserId($systemIdentifier);
 
         $numberOfUsersInSystem = $this->userQuery->getNumberOfAllUsers();
-        $mostPopularDevicesTypeInSystem = $this->userQuery->getMostPopularDevicesType();
+        $mostPopularDevicesTypeInSystem = $this->deviceQuery->getMostPopularDeviceType();
 
         return $this->json(
             [

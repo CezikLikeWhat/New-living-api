@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Symfony\Controller;
 
+use App\Core\Application\Query\DeviceQuery;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Security\Infrastructure\Symfony\User\User;
@@ -16,6 +17,7 @@ class ProfileController extends AbstractController
 {
     public function __construct(
         private readonly UserQuery $userQuery,
+        private readonly DeviceQuery $deviceQuery,
     ) {
     }
 
@@ -23,7 +25,7 @@ class ProfileController extends AbstractController
     public function loadUserProfile(#[CurrentUser] User $user): Response
     {
         $userInfo = $this->userQuery->getAllUserInformationsByUserId($user->systemIdentifier());
-        $userDevices = $this->userQuery->getAllUserDevicesByUserId($user->systemIdentifier());
+        $userDevices = $this->deviceQuery->getAllDevicesByUserId($user->systemIdentifier());
 
         return $this->render('Profile/profile.html.twig', [
             'user' => $userInfo,
@@ -36,7 +38,7 @@ class ProfileController extends AbstractController
     {
         $systemIdentifier = Uuid4::fromString($id);
         $userInfo = $this->userQuery->getAllUserInformationsByUserId($systemIdentifier);
-        $userDevices = $this->userQuery->getAllUserDevicesByUserId($systemIdentifier);
+        $userDevices = $this->deviceQuery->getAllDevicesByUserId($systemIdentifier);
 
         return $this->json(
             [
