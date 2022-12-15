@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Core\Application\Query\DeviceQuery;
 use App\Core\Application\Query\UserQuery;
 use App\Core\Domain\Clock;
 use App\Core\Domain\Clock\TestClock;
@@ -61,6 +62,11 @@ class DoctrineTestCase extends WebTestCase
     protected function userQuery(): UserQuery
     {
         return static::getContainer()->get(UserQuery::class);
+    }
+
+    protected function deviceQuery(): DeviceQuery
+    {
+        return static::getContainer()->get(DeviceQuery::class);
     }
 
     protected function addDevice(
