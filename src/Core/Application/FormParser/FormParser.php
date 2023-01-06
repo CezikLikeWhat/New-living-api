@@ -78,9 +78,9 @@ class FormParser
                 if (
                     ($deviceFeature->payload['actual_status']['features']['EYE']['status'] !== $formData['EYE']['enable'] && !$formData['AMBIENT'] && !$formData['LOADING']['enable']) ||
                         (
-                            'ON' === $deviceFeature->payload['actual_status']['features']['EYE']['status'] &&
+                            $deviceFeature->payload['actual_status']['features']['EYE']['status'] &&
                             (
-                                'ON' === $formData['EYE']['enable'] &&
+                                $formData['EYE']['enable'] &&
                                 ($deviceFeature->payload['actual_status']['features']['EYE']['color'] !== $formData['EYE']['colorPicker'])
                             )
                         )
@@ -94,9 +94,9 @@ class FormParser
                 if (
                     ($deviceFeature->payload['actual_status']['features']['LOADING']['status'] !== $formData['LOADING']['enable'] && !$formData['AMBIENT'] && !$formData['EYE']['enable']) ||
                         (
-                            'ON' === $deviceFeature->payload['actual_status']['features']['LOADING']['status'] &&
+                            $deviceFeature->payload['actual_status']['features']['LOADING']['status'] &&
                             (
-                                'ON' === $formData['LOADING']['enable'] &&
+                                $formData['LOADING']['enable'] &&
                                 ($deviceFeature->payload['actual_status']['features']['LOADING']['color'] !== $formData['LOADING']['colorPicker'])
                             )
                         )
