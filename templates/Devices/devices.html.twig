@@ -2,23 +2,13 @@
 
 {% block title %} Devices {% endblock %}
 
-{#{% block stylesheets %}#}
-{#    <style>#}
-{#        .device-row {#}
-{#            cursor: pointer;#}
-{#            transition: 0.25s background-color ease-out;#}
-{#        }#}
-{#        .device-row:hover{#}
-{#            background-color: rgba(0,0,0,0.4)#}
-{#        }#}
-{#    </style>#}
-{#{% endblock %}#}
-
 {% block body %}
 
     {{ include('navigation_bar.html.twig') }}
 
-    <div class="container-fluid" style="margin: 16px; width: calc(100% - 32px); background-color: rgba(0,0,0,0.05); border-radius: 8px">
+    {{ include('successFlashAlert.html.twig') }}
+
+    <div class="container-fluid" style="margin: 16px 32px; width: calc(100% - 64px); background-color: rgba(0,0,0,0.05); border-radius: 8px">
         <div class="row">
             <table class="table table-striped" style="margin-bottom: 0 !important;">
                 <thead style="border-bottom: 2px solid rgba(0,0,0,0.2)">
@@ -30,7 +20,7 @@
                             <span>Created At</span>
                         </td>
                         <td style="width: 32px">
-                            <button class="add-button" onclick="document.location.href = './devices/creator'">
+                            <button class="add-button" onclick="window.location.href = '{{ path('add_device') }}'">
                                 <i class="fa-solid fa-add"></i>
                             </button>
                         </td>
@@ -38,7 +28,7 @@
                 </thead>
                 <tbody>
                 {% for device in devices %}
-                        <tr onclick="document.location.href='./devices/{{ device.id }}'" class="device-row">
+                        <tr onclick="document.location.href='{{ path('specific_device', {'id': device.id}) }}'" class="device-row">
                             <td style="padding-left: 8px">
                                 <span style="padding-left: 8px">{{ device.name }}</span>
                             </td>

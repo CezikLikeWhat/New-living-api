@@ -8,11 +8,16 @@
     <style>
         #content{
             margin-top: 20px;
+            max-width: 100%;
         }
-        #category{
+        .category{
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+        }
+        .column{
+            display: flex;
+            justify-content: flex-end;
         }
     </style>
 
@@ -22,37 +27,69 @@
 
     {{ include('navigation_bar.html.twig') }}
 
-    {% set array = [
-        {'categoryName': 'General', 'textFields': [
-            {'fieldLabel': 'Name','fieldName': 'name', 'fieldValue':  device.deviceName, 'fieldPlaceholder': 'Device name','fieldType': 'text'},
-            {'fieldLabel': 'Type','fieldName': 'type', 'fieldValue': device.deviceType.value, 'fieldPlaceholder': 'Device Type','fieldType': 'text'},
-            {'fieldLabel': 'MAC Address','fieldName': 'mac', 'fieldValue': device.macAddress, 'fieldPlaceholder': 'Device MAC Address','fieldType': 'text'}
-        ]}
-    ] %}
-
     <div class="container-fluid" id="content">
-        {% for element in array %}
-            {% include 'Profile/profile_category.html.twig' with element %}
-        {% endfor %}
 
+        {{ include('successFlashAlert.html.twig') }}
 
-        <div class="container-fluid" id="category" >
+        <div class="container-fluid category">
+            <div class="col col-md-12">
+                <h3>General</h3>
+            </div>
+
+            <div class="col col-md-12 column">
+                {% include 'Devices/device_general_form.html.twig' with {'form': deviceInformationForm} %}
+            </div>
+        </div>
+
+        <div class="container-fluid category">
             <div class="col col-md-12">
                 <h3>Features</h3>
             </div>
 
-            <div class="col col-md-12" style="display: flex; justify-content: flex-end">
+            <div class="col col-md-12 column">
+                {% include '/Devices/device_feature.html.twig' with {'device': device, 'form': deviceFeaturesForm} %}
+            </div>
+        </div>
+
+        <div class="container-fluid category" style="margin-bottom: 20px">
+            <div class="col col-md-12">
+                <h3>Management</h3>
+            </div>
+
+            <div class="col col-md-12 column">
                 <div class="col col-md-9">
                     <div class="container-fluid">
-                        {% for element in device.features %}
-                            {% include '/Devices/device_feature.html.twig' with element %}
-                        {% endfor %}
+                        <div class="row">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDeviceModal">
+                                Delete device
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <div class="modal fade" id="deleteDeviceModal" tabindex="-1" aria-labelledby="deleteDeviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteDeviceModalLabel">Delete device</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to remove the device?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" onclick="document.location.href='{{ path('delete_device', {'id': device.id}) }}'">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 {% endblock %}
 

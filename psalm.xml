@@ -17,6 +17,44 @@
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
     </plugins>
     <issueHandlers>
+        <InvalidDocblock>
+            <errorLevel type="suppress">
+                <file name="src/Core/Infrastructure/Symfony/Serializer/DeviceStatusMessageSerializer.php"/>
+            </errorLevel>
+        </InvalidDocblock>
+        <MoreSpecificImplementedParamType>
+            <errorLevel type="suppress">
+                <file name="src/Core/Infrastructure/Symfony/Serializer/DeviceStatusMessageSerializer.php"/>
+            </errorLevel>
+        </MoreSpecificImplementedParamType>
+        <MixedArrayAssignment>
+            <errorLevel type="suppress">
+                <file name="src/Device/Infrastructure/Doctrine/Repository/ORMDeviceFeatureRepository.php"/>
+            </errorLevel>
+        </MixedArrayAssignment>
+        <MixedAssignment>
+            <errorLevel type="suppress">
+                <file name="src/Device/Application/UseCase/AddDevice.php"/>
+                <file name="src/Device/Infrastructure/Symfony/Forms/DeviceFeaturesFormType.php"/>
+            </errorLevel>
+        </MixedAssignment>
+        <MixedArrayAccess>
+            <errorLevel type="suppress">
+                <file name="src/Core/Application/FormParser/FormParser.php"/>
+                <file name="src/Device/Application/UseCase/AddDevice.php"/>
+                <file name="src/Device/Infrastructure/Symfony/Forms/DeviceFeaturesFormType.php"/>
+            </errorLevel>
+        </MixedArrayAccess>
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <file name="src/Device/Infrastructure/Symfony/Forms/GeneralDeviceInformationFormType.php"/>
+            </errorLevel>
+        </RedundantCondition>
+        <TypeDoesNotContainType>
+            <errorLevel type="suppress">
+                <file name="src/Device/Infrastructure/Symfony/Forms/GeneralDeviceInformationFormType.php"/>
+            </errorLevel>
+        </TypeDoesNotContainType>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="src/DataFixtures"/>

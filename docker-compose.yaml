@@ -14,17 +14,25 @@ services:
       context: .
       dockerfile: docker/dev/Dockerfile
     image: new-living-dev
+    depends_on:
+      new-living-database:
+        condition: service_healthy
+      new-living-rabbitmq:
+        condition: service_healthy
+      new-living-mailer:
+        condition: service_healthy
 
   new-living-database:
-    image: postgres:14.3-alpine
     container_name: new-living-database
+    image: postgres:14.3-alpine
 
   new-living-mailer:
+    container_name: new-living-mailcatcher
     image: schickling/mailcatcher
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    #    image: rabbitmq
-#    build:
-#      context: .
-#      dockerfile: docker/rabbitmq/Dockerfile
+  new-living-rabbitmq:
+    container_name: new-living-rabbitmq
+    build:
+      context: .
+      dockerfile: docker/rabbitmq/Dockerfile
+    image: elo-rabbitmq

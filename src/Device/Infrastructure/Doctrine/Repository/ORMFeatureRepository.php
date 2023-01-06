@@ -27,4 +27,11 @@ class ORMFeatureRepository implements FeatureRepository
             ->getRepository(Feature::class)
             ->findOneBy(['id' => $featureId]);
     }
+
+    public function findByCodeName(string $codeName): ?Feature
+    {
+        return $this->registry
+            ->getRepository(Feature::class)
+            ->findOneBy(['codeName' => $codeName]);
+    }
 }

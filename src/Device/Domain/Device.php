@@ -11,9 +11,9 @@ class Device
     public function __construct(
         public readonly Uuid $id,
         public readonly Uuid $userId,
-        public readonly string $name,
-        public readonly DeviceType $deviceType,
-        public readonly MACAddress $macAddress,
+        public string $name,
+        public DeviceType $deviceType,
+        public MACAddress $macAddress,
         public readonly \DateTimeImmutable $createdAt,
     ) {
     }

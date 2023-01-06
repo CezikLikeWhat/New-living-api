@@ -15,7 +15,7 @@ class DeviceFeature
         public readonly Uuid $id,
         public readonly Uuid $featureId,
         public readonly Uuid $deviceId,
-        public readonly array $payload,
+        public array $payload,
     ) {
     }
 }

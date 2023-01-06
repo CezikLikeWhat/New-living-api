@@ -127,61 +127,85 @@ class DBALDeviceQuery implements DeviceQuery
     public function getDeviceInformationById(Uuid $deviceId): DeviceWithFeatures
     {
         /** @var array{
-         *     device_name: string,
+         *     id: string,
+         *     name: string,
          *     device_type: string,
          *     mac_address: string,
          *     created_at: string,
          *     payload: string,
-         *     feature_name: string,
-         *     display_type: string
          * } $deviceInformation
          */
         $deviceInformation = $this->connection->fetchAssociative('
-            SELECT d.name as device_name, 
+            SELECT d.id,
+                   d.name, 
                    d.device_type, 
                    d.mac_address, 
-                   d.created_at
+                   d.created_at,
+                   df.payload
             FROM devices d
+            INNER JOIN devices_features df on d.id = df.device_id
             WHERE d.id = :deviceId
         ', [
             'deviceId' => $deviceId,
         ]);
 
         /** @var array{
-         *     payload: string,
          *     name: string,
          *     display_type: string,
+         *     code_name: string
          * }[] $deviceFeatures
          */
         $deviceFeatures = $this->connection->fetchAllAssociative('
-            SELECT df.payload,
-                   f.name, 
-                   f.display_type
-            FROM devices_features df
-            INNER JOIN features f on df.feature_id = f.feature_id
+            SELECT f.name, 
+                   f.display_type,
+                   f.code_name
+            FROM features f
+            INNER JOIN devices_features df on f.feature_id = df.feature_id
             WHERE df.device_id = :deviceId
+            ORDER BY f.code_name DESC 
         ', [
             'deviceId' => $deviceId,
         ]);
 
         $arrayOfFeatures = [];
 
+        /** @var array{
+         *     device: array{
+         *          mac: string,
+         *          type: string,
+         *          id: string,
+         *     },
+         *     actual_status: array{
+         *          TURN_ON: bool,
+         *          TURN_OFF: bool,
+         *          features: array<string,mixed>
+         *     }
+         * } $payload
+         */
+        $payload = json_decode($deviceInformation['payload'], true, 512, JSON_THROW_ON_ERROR);
+
         foreach ($deviceFeatures as $feature) {
-            /** @var array<mixed> $payload */
-            $payload = json_decode($feature['payload'], true, 512, JSON_THROW_ON_ERROR);
-            $arrayOfFeatures[] = [
-                'feature_name' => $feature['name'],
-                'display_type' => $feature['display_type'],
-                'payload' => $payload,
-            ];
+            $arrayOfFeatures[] = new DeviceQuery\DeviceFeature(
+                $feature['name'],
+                $feature['display_type'],
+                $feature['code_name'],
+            );
+            if ('TURN_ON' !== $feature['code_name'] && 'TURN_OFF' !== $feature['code_name']) {
+                /** @phpstan-ignore-next-line
+                 *  @psalm-suppress MixedArrayAssignment
+                 */
+                $payload['actual_status']['features'][$feature['code_name']]['display_type'] = $feature['display_type'];
+            }
         }
 
         return new DeviceWithFeatures(
-            $deviceInformation['device_name'],
+            Uuid4::fromString($deviceInformation['id']),
+            $deviceInformation['name'],
             DeviceType::fromString($deviceInformation['device_type']),
             new MACAddress($deviceInformation['mac_address']),
             new \DateTimeImmutable($deviceInformation['created_at']),
-            $arrayOfFeatures,
+            $payload,
+            $arrayOfFeatures
         );
     }
 }

@@ -1,0 +1,49 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .sub-button{
+            margin-top: 2vh;
+            float: right;
+            background-color: #5B96C2;
+            color: white;
+            border-color: #5B96C2;
+            transition: .25s background-color ease-out;
+            position: relative;
+        }
+        .sub-button:hover{
+            color: white;
+            background-color: rgba(63,124,172,1)
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="col col-md-9">
+        <div class="container-fluid">
+            {{ form_start(form) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.firstName) }}</h5>
+            </div>
+            {{ form_widget(form.firstName) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.lastName) }}</h5>
+            </div>
+            {{ form_widget(form.lastName) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.email) }}</h5>
+            </div>
+            {{ form_widget(form.email) }}
+
+            {{ form_widget(form.submit, {'attr':{'class': "sub-button"}}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+{% endblock %}

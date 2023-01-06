@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Device {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        #content{
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        .category{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .column{
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    <div class="container-fluid" id="content">
+
+        <div class="container-fluid category">
+            <div class="col col-md-12">
+                <h3>Add new device</h3>
+            </div>
+
+            <div class="col col-md-12 column">
+                {% include 'Devices/device_general_form.html.twig' with {'form': addNewDeviceForm} %}
+            </div>
+        </div>
+
+
+
+
+
+
+{% endblock %}
+

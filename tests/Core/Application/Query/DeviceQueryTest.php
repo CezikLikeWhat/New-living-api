@@ -7,6 +7,7 @@ namespace App\Tests\Core\Application\Query;
 use App\Core\Application\Query\DeviceQuery\Device;
 use App\Core\Domain\Uuid;
 use App\Core\Infrastructure\Symfony\Uuid4;
+use App\Device\Application\UseCase\AddFeature\Command as AddFeatureCommand;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use App\Tests\DoctrineTestCase;
@@ -17,6 +18,10 @@ class DeviceQueryTest extends DoctrineTestCase
     {
         parent::setUp();
 
+        // Features
+        $this->loadFeaturesFixtures();
+
+        // Devices
         $this->addDevice(
             userId: Uuid4::fromString('c3809d87-3bee-4771-b285-8ed327837c0d'),
             name: 'Distance sensor - front door',
@@ -27,7 +32,7 @@ class DeviceQueryTest extends DoctrineTestCase
         $this->addDevice(
             userId: Uuid4::fromString('af49b9aa-89d7-4a24-9010-c23806831e0a'),
             name: 'Led strip behind TV',
-            deviceType: DeviceType::LED_STRIP,
+            deviceType: DeviceType::LED_RING,
             macAddress: new MACAddress('0A:AE:B9:A3:8F:04'),
             id: Uuid4::fromString('2355ee99-75c4-45e9-9485-2637be030649'),
         );
@@ -88,7 +93,7 @@ class DeviceQueryTest extends DoctrineTestCase
                     new Device(
                         id: Uuid4::fromString('2355ee99-75c4-45e9-9485-2637be030649'),
                         name: 'Led strip behind TV',
-                        deviceType: DeviceType::LED_STRIP,
+                        deviceType: DeviceType::LED_RING,
                         macAddress: new MACAddress('0A:AE:B9:A3:8F:04'),
                         createdAt: new \DateTimeImmutable('22-10-2022'),
                     ),

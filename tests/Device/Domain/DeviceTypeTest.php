@@ -30,7 +30,7 @@ class DeviceTypeTest extends TestCase
     {
         return [
             ['Light bulb'],
-            ['Led strip'],
+            ['Led ring'],
             ['Distance sensor'],
         ];
     }

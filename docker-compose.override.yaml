@@ -7,25 +7,40 @@ services:
     volumes:
       - .:/var/www/new-living/
     networks:
-      - default
+      - messaging
+      - database-connection
 
   new-living-database:
     environment:
       POSTGRES_DB: new-living-db
       POSTGRES_PASSWORD: new-living
       POSTGRES_USER: new-living
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "new-living", "-d", "new-living-db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     ports:
       - "5432:5432"
     volumes:
-      - new-living-db-volume:/var/lib/postgresql/data:rw
+      - database-volume:/var/lib/postgresql/data:rw
+    networks:
+      - database-connection
 
   new-living-mailer:
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--spider", "http://localhost:1080" ]
+      interval: 10s
+      timeout: 5s
+      retries: 6
     ports:
       - "1025"
       - "1080"
-  rabbitmq:
+
+  new-living-rabbitmq:
+    hostname: rabbitmq
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:15672" ]
+      test: rabbitmq-diagnostics -q status
       interval: 30s
       timeout: 10s
       retries: 5
@@ -34,12 +49,13 @@ services:
       - "5672:5672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
-      - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - messaging
 
 volumes:
-  new-living-db-volume:
+  database-volume:
   rabbitmq-data:
-  rabbitmq-log:
 
 networks:
-  default:
+  messaging:
+  database-connection:

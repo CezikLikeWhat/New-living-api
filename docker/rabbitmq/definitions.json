@@ -1,0 +1,114 @@
+{
+  "rabbit_version": "3.10.13",
+  "rabbitmq_version": "3.10.13",
+  "product_name": "RabbitMQ",
+  "product_version": "3.10.13",
+  "users": [
+    {
+      "name": "device",
+      "password_hash": "0jXAV/jZuq/4qWFlW3rZC0THGTZwXCUTePAURxPighbv7u0C",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    },
+    {
+      "name": "new_living",
+      "password_hash": "crTnsjQ8gN41uBrZLPk1ypi9yHDJ71AHYaN2kjgflkWmFbnu",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "new_living_vhost"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "new_living",
+      "vhost": "new_living_vhost",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "device",
+      "vhost": "new_living_vhost",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "internal_cluster_id",
+      "value": "rabbitmq-cluster-id-WLbeN2QRAPN5QSsvxDMNdw"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "device_status_queue",
+      "vhost": "new_living_vhost",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "change_parameter_queue",
+      "vhost": "new_living_vhost",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "device_status_exchange",
+      "vhost": "new_living_vhost",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "change_parameter_exchange",
+      "vhost": "new_living_vhost",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "change_parameter_exchange",
+      "vhost": "new_living_vhost",
+      "destination": "change_parameter_queue",
+      "destination_type": "queue",
+      "routing_key": "device.*",
+      "arguments": {}
+    },
+    {
+      "source": "device_status_exchange",
+      "vhost": "new_living_vhost",
+      "destination": "device_status_queue",
+      "destination_type": "queue",
+      "routing_key": "*",
+      "arguments": {}
+    }
+  ]
+}

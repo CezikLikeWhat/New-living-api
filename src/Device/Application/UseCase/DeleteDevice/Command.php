@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Device\Application\UseCase\RemoveDevice;
+namespace App\Device\Application\UseCase\DeleteDevice;
 
 use App\Core\Domain\Uuid;
 

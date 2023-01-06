@@ -71,6 +71,9 @@
             "config/packages/knpu_oauth2_client.yaml"
         ]
     },
+    "liip/test-fixtures-bundle": {
+        "version": "2.5.0"
+    },
     "phpunit/phpunit": {
         "version": "9.5",
         "recipe": {

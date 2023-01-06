@@ -9,13 +9,32 @@ framework:
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
             async_email: '%env(MESSENGER_TRANSPORT_DSN_EMAIL)%'
-            async_queue: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_DEVICE_STATUS)%'
+            async_queue:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_CHANGE_PARAMETER)%'
+                options:
+                    vhost: 'new_living_vhost'
+                    exchange:
+                        name: change_parameter_exchange
+                        type: topic
+                    queues: []
+                serializer: messenger.transport.symfony_serializer
+            async_status:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_CHANGE_PARAMETER)%'
+                options:
+                    vhost: 'new_living_vhost'
+                    exchange:
+                        name: device_status_exchange
+                        type: direct
+                    queues:
+                        device_status_queue: ~
+                serializer: 'App\Core\Infrastructure\Symfony\Serializer\DeviceStatusMessageSerializer'
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async_email
-            'App\Core\Application\Message\DeviceStatus\Command': async_queue
+            'App\Core\Application\Message\ChangeParameter\Command': async_queue
+            'App\Core\Application\Message\DeviceStatus\Command': async_status
 
         buses:
             messenger.bus.default:

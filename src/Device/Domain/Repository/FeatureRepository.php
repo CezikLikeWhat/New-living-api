@@ -12,4 +12,6 @@ interface FeatureRepository
     public function add(Feature $feature): void;
 
     public function findById(Uuid $featureId): ?Feature;
+
+    public function findByCodeName(string $codeName): ?Feature;
 }
