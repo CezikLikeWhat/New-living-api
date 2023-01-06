@@ -21,6 +21,7 @@ class User
         private string $firstName,
         private string $lastName,
         private Email $email,
+        private readonly \DateTimeImmutable $createdAt,
         private array $roles,
     ) {
         if (!$firstName || ctype_space($this->firstName)) {
@@ -90,6 +91,11 @@ class User
         $roles[] = $newRole;
 
         $this->roles = array_unique($roles);
+    }
+
+    public function createdAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 
     public function eraseCredentials(): void

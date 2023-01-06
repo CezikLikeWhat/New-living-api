@@ -1,0 +1,46 @@
+
+{% block stylesheets %}
+    <style>
+        #container{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 90%;
+            margin-inline: auto;
+            gap: 1rem;
+        }
+        #column{
+            border-radius: 10px;
+            background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+            padding: 20px 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="column" class="col col-md-5">
+
+        <div id="container" class="container-fluid">
+
+            <i class="fa-solid {{ icon }} fa-3x"></i>
+
+            <div>
+                <h3>{{ name }}</h3>
+                {% if amount.type is defined and amount.type != '' %}
+                    <span>Type: {{ amount.type }}</span><br/>
+                    <span>Quantity: {{ amount.quantity }}</span>
+                {% elseif amount.type is defined and amount.type == '' %}
+                    <span>Nie posiadasz żadnego urządzenia</span>
+                {% else %}
+                    <span>{{ amount }}</span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

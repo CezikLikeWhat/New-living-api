@@ -1,0 +1,48 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .sub-button{
+            margin-top: 2vh;
+            float: right;
+            background-color: #5B96C2;
+            color: white;
+            border-color: #5B96C2;
+            transition: .25s background-color ease-out;
+            position: relative;
+        }
+        .sub-button:hover{
+            color: white;
+            background-color: rgba(63,124,172,1)
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="col col-md-9">
+        <div class="container-fluid">
+            {{ form_start(form) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.deviceName) }}</h5>
+            </div>
+            {{ form_widget(form.deviceName) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.deviceType) }}</h5>
+            </div>
+            {{ form_widget(form.deviceType) }}
+
+            <div class="row profile-field">
+                <h5>{{ form_label(form.deviceMacAddress) }}</h5>
+            </div>
+            {{ form_widget(form.deviceMacAddress) }}
+
+            {{ form_widget(form.submit, {'attr':{'class': "sub-button"}}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+{% endblock %}

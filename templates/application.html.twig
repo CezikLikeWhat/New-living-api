@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Application {% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <style>
+        #application-container{
+            justify-content: center;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        #image{
+            box-shadow: 0 0 24px 0 #393E46;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        #image-container{
+            box-shadow: 0 0 24px 0 #393E46;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        #logo{
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            border: 2px solid #393E46;
+        }
+        #textarea{
+            box-shadow: 0 0 10px 5px #393E46;
+            background-color: rgba(248, 249, 250, 1);
+            border-radius: 16px;
+            padding: 15px 10px;
+            width: 50%;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    <div id="application-container" class="container-fluid">
+
+        <div id="image-container" class="row">
+            <div id="image">
+                <img id="logo" src="{{ asset('images/New_Living.png') }}" alt="new_living_logo">
+            </div>
+        </div>
+
+        <div id="textarea" class="row">
+            <span>
+                New Living is an open source application that allows users to easily add, remove and manage Smart House devices.
+                The user, using RaspberryPi devices and Docker containers, is able to build an entire Smart House ecosystem, and from the web application is able to manage various device parameters such as bulb color or light animations or many more.
+                The application is open source and open to expansion by users. Anyone who creates a Smart House module can share it with documentation with the rest of the community.
+            </span>
+        </div>
+
+    </div>
+
+{% endblock %}

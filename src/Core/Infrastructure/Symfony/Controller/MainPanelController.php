@@ -13,6 +13,6 @@ class MainPanelController extends AbstractController
     #[Route('/', name: 'load_main_panel', methods: ['GET'])]
     public function loadMainPanel(): Response
     {
-        return $this->render('main.html.twig');
+        return $this->redirectToRoute('load_dashboard');
     }
 }

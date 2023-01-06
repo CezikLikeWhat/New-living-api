@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Author {% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <style>
+        #application-container{
+            justify-content: center;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        #image{
+            box-shadow: 0 0 24px 0 #393E46;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 2px solid #393E46;
+            background-image: url("{{ asset('images/Author.png') }}");
+            background-size: cover; background-position: center;
+        }
+        #image-container{
+            box-shadow: 0 0 24px 0 #393E46;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        #textarea{
+            box-shadow: 0 0 10px 5px #393E46;
+            background-color: rgba(248, 249, 250, 1);
+            border-radius: 16px;
+            padding: 15px 10px;
+            width: 50%;
+        }
+        .icons-container{
+            display: flex;
+            justify-content: center;
+        }
+        .icons{
+            font-size: 2.5rem;
+            padding-left: 3rem;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    <div id="application-container" class="container-fluid">
+
+        <div id="image-container" class="row">
+            <div id="image">
+            </div>
+        </div>
+
+        <div id="textarea" class="row">
+            <span>
+                My name is Cezary Maćkowski. I'm a final year student in the field of engineering computer science at the Nicolaus Copernicus University in Torun.
+                I have been working as a Backend/Cloud Developer at Iteo since March 2022. I work with technologies such as PHP(Symfony), Twig, Docker and Google Cloud Platform.
+                I'm interested in cyber security, hacking, IoT (Internet of Things) and web technologies in general.
+                In my free time I create projects based on Go and Python programming languages.
+            </span>
+        </div>
+
+
+        <div class="container-fluid icons-container">
+            <div class="row">
+                <div class="col">
+                    <a class="icons" href="https://github.com/CezikLikeWhat" style="color: #171515">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="icons" href="mailto: cezarymackowski99@gmail.com" style="color: #1F1F1F">
+                        <i class="fa-solid fa-inbox"></i>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="icons" href="https://hub.docker.com/u/cezarymackowski" style="color: #0DB7ED">
+                        <i class="fa-brands fa-docker"></i>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="icons" href="https://www.linkedin.com/in/cezary-ma%C4%87kowski-662194223/" style="color: #0077B5">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}

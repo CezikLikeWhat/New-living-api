@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Infrastructure\Google;
 
+use App\Core\Domain\Email;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Security\Infrastructure\Symfony\User\User;
 use App\User\Application\UseCase\AddUser;
@@ -74,7 +75,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                 $googleEmail = $googleUser->getEmail() ?? 'john.doe@gmail.com';
                 $roles = ['ROLE_USER'];
 
-                $user = $this->userRepository->findByGoogleId($googleUserId);
+                $user = $this->userRepository->findByEmail(new Email($googleEmail));
 
                 if (!$user) {
                     if (in_array($googleEmail, $this->roleAdminEmails, true)) {

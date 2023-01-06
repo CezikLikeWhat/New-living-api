@@ -1,0 +1,12 @@
+
+{% block body %}
+
+    <div class="row profile-field">
+        <h5>{{ fieldLabel }}</h5>
+    </div>
+
+    <div class="row">
+        <input class="form-control" type="{{ fieldType }}" name="{{ fieldName }}" placeholder="{{ fieldPlaceholder }}" value="{{ fieldValue }}"/>
+    </div>
+
+{% endblock %}

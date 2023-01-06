@@ -28,7 +28,7 @@ class UsersFixtures extends Fixture
             googleId: '104215204619508124589',
             firstName: 'Cezary',
             lastName: 'Maćkowski',
-            email: 'cezary.mackowski@gmail.com',
+            email: 'cezarymackowski99@gmail.com',
             userId: Uuid4::fromString('6444fa16-a42b-49fc-83ba-0019e596ded0'),
             roles: ['ROLE_USER', 'ROLE_ADMIN']
         );

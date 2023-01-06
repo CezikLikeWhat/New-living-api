@@ -1,0 +1,126 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .sub-button{
+            margin-top: 2vh;
+            float: right;
+            background-color: #5B96C2;
+            color: white;
+            border-color: #5B96C2;
+            transition: .25s background-color ease-out;
+            position: relative;
+        }
+        .sub-button:hover{
+            color: white;
+            background-color: rgba(63,124,172,1)
+        }
+        .custom-toggle{
+            font-size: 1.3rem;
+            cursor: pointer
+        }
+        .custom-input{
+            margin-left: 0.80em !important;
+        }
+        .color-picker{
+            width: 100%;
+        }
+        .centerIt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="col col-md-9">
+        <div class="container-fluid">
+
+            {{ form_start(form) }}
+
+            {% for feature in device.features %}
+                <div class="row profile-field">
+                    <h5>{{ feature.featureName }}</h5>
+                </div>
+
+                <div class="row">
+
+                    {% if feature.displayType == 'toggle_and_colorpicker' %}
+
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-3 centerIt">
+                                    {{ form_widget(form.offsetGet(feature.codeName).enable)}}
+                                </div>
+                                <div class="col-md-9">
+                                    {{ form_widget(form.offsetGet(feature.codeName).colorPicker)}}
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-3 centerIt">
+                                {{ form_widget(form.offsetGet(feature.codeName))}}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+
+            {{ form_widget(form.submit, {'attr':{'class': "sub-button"}}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        $(".feature-toggle").each((id, el) => {
+            if($("#device_features_form_TURN_OFF").prop("checked")) if(el.dataset.type) el.disabled = true
+        })
+
+        $(".color-picker").each((id, el) => {
+            if($("#device_features_form_TURN_OFF").prop("checked")) el.disabled = true
+        })
+
+        $(".turn-toggle").click(({ target }) => {
+            $(`#device_features_form_TURN_${target.id.includes("ON") ? "OFF" : "ON"}`).prop("checked", !target.checked)
+            if($("#device_features_form_TURN_OFF").prop("checked")){
+                $(".feature-toggle").each((id, el) => {
+                    el.checked = false;
+                    el.disabled = true;
+                })
+                $(".color-picker").each((id, el) => el.disabled = true)
+            } else {
+                $(".feature-toggle").each((id, el) => {
+                    if(el.dataset.type === "EYE" || el.dataset.type === "CHANGE_COLOR_LIGHT_BULB") {
+                        el.checked = true
+                        $(".color-picker[data-set-type=EYE], .color-picker[data-set-type=CHANGE_COLOR_LIGHT_BULB]").prop("disabled", false)
+                    }
+                    el.disabled = false;
+                })
+            }
+        })
+        $(".feature-toggle").click(({target}) => {
+            $(".feature-toggle").each((id, el) => {
+                if(el.id !== target.id) el.checked = false;
+            });
+            $(".color-picker").each((id, el) => {
+                el.disabled = el.dataset.setType !== target.dataset.type
+                if(el.dataset.setType !== target.dataset.type) el.value = "#000000"
+            })
+        })
+
+    </script>
+{% endblock %}
+

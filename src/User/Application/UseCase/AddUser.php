@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Application\UseCase;
 
+use App\Core\Domain\Clock;
 use App\Core\Domain\Email;
 use App\Core\Domain\Exception\EmailException;
 use App\Core\Infrastructure\Symfony\Uuid4;
@@ -16,6 +17,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class AddUser
 {
     public function __construct(
+        private readonly Clock $clock,
         private readonly UserRepository $userRepository,
     ) {
     }
@@ -32,6 +34,7 @@ class AddUser
             firstName: $command->firstName,
             lastName: $command->lastName,
             email: new Email($command->email),
+            createdAt: $this->clock->now(),
             roles: $command->roles
         );
 

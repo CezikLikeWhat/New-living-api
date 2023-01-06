@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Devices {% endblock %}
+
+{% block body %}
+
+    {{ include('navigation_bar.html.twig') }}
+
+    {{ include('successFlashAlert.html.twig') }}
+
+    <div class="container-fluid" style="margin: 16px 32px; width: calc(100% - 64px); background-color: rgba(0,0,0,0.05); border-radius: 8px">
+        <div class="row">
+            <table class="table table-striped" style="margin-bottom: 0 !important;">
+                <thead style="border-bottom: 2px solid rgba(0,0,0,0.2)">
+                    <tr>
+                        <td>
+                            <span style="padding-left: 8px">Name</span>
+                        </td>
+                        <td style="text-align: right">
+                            <span>Created At</span>
+                        </td>
+                        <td style="width: 32px">
+                            <button class="add-button" onclick="window.location.href = '{{ path('add_device') }}'">
+                                <i class="fa-solid fa-add"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for device in devices %}
+                        <tr onclick="document.location.href='{{ path('specific_device', {'id': device.id}) }}'" class="device-row">
+                            <td style="padding-left: 8px">
+                                <span style="padding-left: 8px">{{ device.name }}</span>
+                            </td>
+                            <td style="text-align: right; padding-right: 8px">
+                                <span>{{ device.createdAt | date('d.m.Y')}}</span>
+                            </td>
+                            <td></td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

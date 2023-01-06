@@ -1,0 +1,11 @@
+
+.idea
+public/.DS_Store
+.DS_Store
+
+
+###> static-program-analysis ###
+.php-cs-fixer.cache
+.phpunit.result.cache
+.
+###< static-program-analysis ###

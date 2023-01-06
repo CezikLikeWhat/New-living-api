@@ -34,8 +34,8 @@ class DevicesFixtures extends Fixture
 
         $commandDeviceTwo = new AddDeviceCommand(
             userId: Uuid4::fromString('6444fa16-a42b-49fc-83ba-0019e596ded0'),
-            name: 'Led strip - tv',
-            deviceType: 'Led strip',
+            name: 'Led ring - tv',
+            deviceType: 'Led ring',
             macAddress: '11:11:11:11:11:11',
             id: Uuid4::fromString('36340076-0431-4a95-8444-69cf1f3173ec')
         );
@@ -53,20 +53,21 @@ class DevicesFixtures extends Fixture
             name: 'Light bulb - kitchen',
             deviceType: 'Light bulb',
             macAddress: '33:33:33:33:33:33',
+            id: Uuid4::fromString('bbf513f0-9c0b-48ac-a1a5-c47f05abe019')
         );
 
         $commandDeviceFive = new AddDeviceCommand(
             userId: Uuid4::fromString('7b85810c-2ad4-4ce2-b088-f0bf2b5bd3c9'),
-            name: 'Led strip - office desk',
-            deviceType: 'Led strip',
+            name: 'Led ring - office desk',
+            deviceType: 'Led ring',
             macAddress: '44:44:44:44:44:44',
             id: Uuid4::fromString('365f42e1-4c47-4292-b788-631cb15ac7a9')
         );
 
         $commandDeviceSix = new AddDeviceCommand(
             userId: Uuid4::fromString('217aa4b9-5fb0-45c6-afff-81894f7af357'),
-            name: 'Camera sensor - front entrance',
-            deviceType: 'Distance sensor',
+            name: 'Led ring - bear picture',
+            deviceType: 'Led ring',
             macAddress: '55:55:55:55:55:55',
             id: Uuid4::fromString('17a84fc0-f1e9-497b-a88b-58a0e4fe1f76')
         );

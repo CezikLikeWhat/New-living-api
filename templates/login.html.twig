@@ -2,27 +2,51 @@
 
 {% block title %} Login Panel {% endblock %}
 
-{#{% block stylesheets %}#}
-{#    <style>#}
-{#        html,body {#}
-{#            height: 100%;#}
-{#        }#}
-{#    </style>#}
-{#{% endblock %}#}
+{% block stylesheets %}
 
+    {{ parent() }}
+    <style>
+        .login-container {
+            width: 30rem;
+            height: 20rem;
+            background-color: #FAF9FC;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+            box-shadow: 0 0 1.5625rem 0.3125rem rgba(103, 105, 132, 0.43);
+            border-radius: 1rem;
+        }
+        .login-title {
+            font-family: Inter, sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #676984;
+            padding: 12%;
+        }
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            gap: 3.5rem;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}
 
 {% block body %}
 
-
-{#    <div class="h-100 d-flex align-items-center justify-content-center">#}
-{#        <a class="btn btn-primary">#}
-{#            XD#}
-{#        </a>#}
-{#    </div>#}
-
-    <a href="{{ path('connect_google_start') }}">
-        <span>Login with Google</span>
-    </a>
+    <div class="main-container container-fluid d-flex justify-content-center align-items-center">
+        <div class="login-container">
+            <span class="login-title">New living</span>
+            <a id="login-button" class="btn btn-outline-dark" href="{{ path('connect_google_start') }}" role="button">
+                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                Login with Google
+            </a>
+        </div>
+    </div>
 
 {% endblock %}
 

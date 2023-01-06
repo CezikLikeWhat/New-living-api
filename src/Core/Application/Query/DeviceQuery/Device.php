@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Application\Query\UserQuery;
+namespace App\Core\Application\Query\DeviceQuery;
 
 use App\Core\Domain\Uuid;
 use App\Device\Domain\DeviceType;
