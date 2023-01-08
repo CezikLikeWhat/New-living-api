@@ -10,7 +10,7 @@ framework:
             # sync: 'sync://'
             async_email: '%env(MESSENGER_TRANSPORT_DSN_EMAIL)%'
             async_queue:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_CHANGE_PARAMETER)%'
+                dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBIT)%'
                 options:
                     vhost: 'new_living_vhost'
                     exchange:
@@ -19,7 +19,7 @@ framework:
                     queues: []
                 serializer: messenger.transport.symfony_serializer
             async_status:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN_QUEUE_CHANGE_PARAMETER)%'
+                dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBIT)%'
                 options:
                     vhost: 'new_living_vhost'
                     exchange:
