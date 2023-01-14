@@ -9,5 +9,5 @@ parameters:
             - src/Core/Application/FormParser/FormParser.php
         - message: "#^Cannot access offset 'CHANGE_DETECTION…' on mixed\\.$#"
           path: src/Core/Application/FormParser/FormParser.php
-        - message: "#^Cannot access offset 'CHANpGE_COLOR_LIGHT…' on mixed\\.$#"
+        - message: "#^Cannot access offset 'CHANGE_COLOR_LIGHT…' on mixed\\.$#"
           path: src/Core/Application/FormParser/FormParser.php
