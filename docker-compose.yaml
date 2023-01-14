@@ -35,4 +35,4 @@ services:
     build:
       context: .
       dockerfile: docker/rabbitmq/Dockerfile
-    image: elo-rabbitmq
+    image: new-living-rabbitmq
