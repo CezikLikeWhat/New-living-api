@@ -1,4 +1,4 @@
-New Living - API
+New Living - Web App/API
 ================
 
 The software is called New Living. 
