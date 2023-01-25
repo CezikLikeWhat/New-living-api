@@ -13,8 +13,8 @@ services:
   new-living-database:
     environment:
       POSTGRES_DB: new-living-db
-      POSTGRES_PASSWORD: new-living
       POSTGRES_USER: new-living
+      POSTGRES_PASSWORD: new-living
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-U", "new-living", "-d", "new-living-db" ]
       interval: 10s

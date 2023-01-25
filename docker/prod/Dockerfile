@@ -1,7 +1,5 @@
 FROM new-living-base as new-living-prod
 
-WORKDIR /var/www/new-living/
-
 ENV APP_ENV prod
 ENV APP_DEBUG 0
 
