@@ -14,7 +14,7 @@ You can use `make` to run some dev scripts.
 If you don't want to install the `make` tool, you can see all the commands being executed in the file [Makefile](Makefile).
 
 ## Endpoint documentation
-Endpoint documentation is available by starting the project and going to https://docs.com
+Endpoint documentation is available by starting the project and going to http://lvh.me/doc
 
 ## Repository of a sample IoT module
 A repository of a sample IoT module is available [here](https://github.com/CezikLikeWhat/new-living-led-ring)
@@ -31,7 +31,7 @@ make build
 make up
 make composer
 ```
-
+__After launching the project, go to http://lvh.me__
 ## Testing
 
 I have some tests written in PHPunit and Behat. To run such tests please start service `make up`,
