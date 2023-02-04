@@ -12,3 +12,6 @@ services:
   App\Core\Application\Query\UserQuery:
     class: App\Core\Infrastructure\Doctrine\Query\DBALUserQuery
     public: true
+
+  App\Tests\Behat\:
+    resource: '../tests/Behat/*'
