@@ -54,7 +54,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/{id}', name: 'get_dashboard_data', methods: ['GET'])]
+    #[Route('/json/dashboard/{id}', name: 'get_dashboard_data', methods: ['GET'])]
     public function getDashboardData(string $id): Response
     {
         $systemIdentifier = Uuid4::fromString($id);
