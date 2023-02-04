@@ -6,6 +6,7 @@ namespace App\Core\Infrastructure\Symfony\Controller;
 
 use App\Core\Application\Query\DeviceQuery;
 use App\Core\Application\Query\UserQuery;
+use App\Core\Infrastructure\Symfony\FormErrorCatcher;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Security\Infrastructure\Symfony\User\User;
 use App\User\Application\UseCase\ChangeUserInformation\Command;
@@ -73,7 +74,52 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile/{id}', name: 'get_user_profile_data', methods: ['GET'])]
+    #[Route('/json/profile/change/{id}', name: 'change_user_profile_data', methods: ['PUT'])]
+    public function changeUserProfileData(string $id, Request $request): Response
+    {
+        $systemIdentifier = Uuid4::fromString($id);
+        $userInfo = $this->userQuery->getAllUserInformationsByUserId($systemIdentifier);
+
+        $generalProfileInformationForm = $this->createForm(
+            GeneralProfileInformationFormType::class,
+            options: [
+                'userInfo' => $userInfo,
+            ]
+        );
+
+        $requestContent = $request->request->all();
+        $generalProfileInformationForm->submit($requestContent);
+
+        if (!$generalProfileInformationForm->isValid()) {
+            return $this->json(
+                [
+                    'errors' => FormErrorCatcher::getFormErrors($generalProfileInformationForm),
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        /** @var array{
+         *     firstName: string,
+         *     lastName: string,
+         *     email: string
+         * } $formData
+         */
+        $formData = $generalProfileInformationForm->getData();
+
+        $command = new Command(
+            $systemIdentifier,
+            $formData['firstName'],
+            $formData['lastName'],
+            $formData['email']
+        );
+
+        $this->messageBus->dispatch($command);
+
+        return $this->json(['status' => 'OK'], Response::HTTP_OK);
+    }
+
+    #[Route('/json/profile/get/{id}', name: 'get_user_profile_data', methods: ['GET'])]
     public function getUserProfileData(string $id): Response
     {
         $systemIdentifier = Uuid4::fromString($id);
