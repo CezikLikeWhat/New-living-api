@@ -31,10 +31,9 @@ class ChangeDeviceInformation
             throw DeviceNotFound::byId($command->deviceId);
         }
 
-        if($oldDevice->name !== $command->deviceName){
+        if ($oldDevice->name !== $command->deviceName) {
             $oldDevice->name = $command->deviceName;
         }
-
 
         if ($oldDevice->deviceType !== $command->deviceType()) {
             $oldDevice->deviceType = $command->deviceType();
