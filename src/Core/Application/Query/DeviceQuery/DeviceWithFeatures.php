@@ -8,7 +8,7 @@ use App\Core\Domain\Uuid;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 
-class DeviceWithFeatures
+class DeviceWithFeatures implements \JsonSerializable
 {
     /**
      * @param array<mixed> $payload
@@ -23,5 +23,29 @@ class DeviceWithFeatures
         public readonly array $payload,
         public readonly array $features,
     ) {
+    }
+
+    /**
+     * @return array{
+     *     id: string,
+     *     name: string,
+     *     type: string,
+     *     macAddress: string,
+     *     createdAt: string,
+     *     payload: array<mixed>,
+     *     features: DeviceFeature[],
+     * }
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => (string) $this->id,
+            'name' => $this->name,
+            'type' => $this->type->value,
+            'macAddress' => (string) $this->macAddress,
+            'createdAt' => $this->createdAt->format('d-m-Y'),
+            'payload' => $this->payload,
+            'features' => $this->features,
+        ];
     }
 }

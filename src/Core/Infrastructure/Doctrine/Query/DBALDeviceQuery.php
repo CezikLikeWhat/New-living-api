@@ -11,6 +11,8 @@ use App\Core\Application\Query\DeviceQuery\MostPopularDeviceType;
 use App\Core\Domain\Uuid;
 use App\Core\Infrastructure\Symfony\Uuid4;
 use App\Device\Domain\DeviceType;
+use App\Device\Domain\Exception\DeviceNotFound;
+use App\Device\Domain\Exception\InvalidMACAddress;
 use App\Device\Domain\MACAddress;
 use Doctrine\DBAL\Connection;
 
@@ -124,6 +126,10 @@ class DBALDeviceQuery implements DeviceQuery
         return new MostPopularDeviceType($deviceType, $quantity);
     }
 
+    /**
+     * @throws DeviceNotFound
+     * @throws InvalidMACAddress
+     */
     public function getDeviceInformationById(Uuid $deviceId): DeviceWithFeatures
     {
         /** @var array{
@@ -133,7 +139,7 @@ class DBALDeviceQuery implements DeviceQuery
          *     mac_address: string,
          *     created_at: string,
          *     payload: string,
-         * } $deviceInformation
+         * }|false $deviceInformation
          */
         $deviceInformation = $this->connection->fetchAssociative('
             SELECT d.id,
@@ -148,6 +154,10 @@ class DBALDeviceQuery implements DeviceQuery
         ', [
             'deviceId' => $deviceId,
         ]);
+
+        if (!is_array($deviceInformation)) {
+            throw DeviceNotFound::byId($deviceId);
+        }
 
         /** @var array{
          *     name: string,
