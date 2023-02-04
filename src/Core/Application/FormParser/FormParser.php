@@ -24,6 +24,7 @@ class FormParser
 
     /**
      * @param array<mixed> $formData
+     *
      * @return array<mixed>
      */
     public function parseChangeFeatureForm(Uuid $deviceId, array $formData): array
@@ -62,7 +63,7 @@ class FormParser
             case DeviceType::LIGHT_BULB:
                 /** @var string $lightBulbColor */
                 $lightBulbColor = !$formData['CHANGE_COLOR_LIGHT_BULB']['colorPicker'] ? '#000000' : $formData['CHANGE_COLOR_LIGHT_BULB']['colorPicker'];
-                if ($deviceFeature->payload['actual_status']['features']['CHANpGE_COLOR_LIGHT_BULB']['color'] !== $lightBulbColor) {
+                if ($deviceFeature->payload['actual_status']['features']['CHANGE_COLOR_LIGHT_BULB']['color'] !== $lightBulbColor) {
                     $options['change']['mode'] = 'CHANGE_COLOR_LIGHT_BULB';
                     $options['change']['options']['color'] = $lightBulbColor;
                     break;
