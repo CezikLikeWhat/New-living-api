@@ -39,7 +39,7 @@ class Uuid4 implements Uuid
         return $this->toString();
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): string
     {
         return $this->toString();
     }

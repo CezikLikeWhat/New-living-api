@@ -15,7 +15,7 @@ class DeviceStatusMessageSerializer implements SerializerInterface
      *     body: string,
      *     headers: array<string,mixed>
      * } $encodedEnvelope
-     * @return Envelope
+     *
      * @throws \JsonException
      */
     public function decode(array $encodedEnvelope): Envelope
@@ -36,7 +36,6 @@ class DeviceStatusMessageSerializer implements SerializerInterface
     }
 
     /**
-     * @param Envelope $envelope
      * @return array{}
      */
     public function encode(Envelope $envelope): array
