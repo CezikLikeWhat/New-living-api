@@ -4,20 +4,15 @@ nelmio_api_doc:
             title: New Living
             description: Official New Living API documentation
             version: 1.0.0
+            contact:
+                email: "cezarymackowski99@gmail.com"
+            license:
+                name: MIT
+                url: https://opensource.org/licenses/MIT
         paths:
-            /example:
-                post:
-                    summary: Example enpoint
-                    requestBody:
-                        required: true
-                        content:
-                            application/json:
-                                schema:
-                                    type: object
-                                    properties:
-                                        username:
-                                            type: string
-                                            format: email
+            /json/application:
+                get:
+                    summary: Get informations about application
                     responses:
                         '200':
                             description: Success
@@ -26,9 +21,391 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            message:
+                                            name:
                                                 type: string
+                                            version:
+                                                type: string
+                                            licence:
+                                                type: string
+                                            about:
+                                                type: string
+            /json/author:
+                get:
+                    summary: Get informations about author
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            name:
+                                                type: string
+                                            about:
+                                                type: string
+                                            contact:
+                                                type: array
+                                                items:
+                                                    type: object
+                                                    properties:
+                                                        github:
+                                                            type: string
+                                                        email:
+                                                            type: string
+                                                        dockerhub:
+                                                            type: string
+                                                        linkedin:
+                                                            type: string
+            /json/profile/get/{id}:
+                get:
+                    summary: Get informations about current user
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                            type: string
+                            format: uuid
+                          required: true
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            user:
+                                                type: object
+                                                properties:
+                                                    first_name:
+                                                        type: string
+                                                    last_name:
+                                                        type: string
+                                                    email:
+                                                        type: string
+                                            userDevices:
+                                                type: array
+                                                items:
+                                                    type: object
+                                                    properties:
+                                                        id:
+                                                            type: string
+                                                        name:
+                                                            type: string
+                                                        device_type:
+                                                            type: string
+                                                        mac_address:
+                                                            type: string
+                                                        created_at:
+                                                            type: string
+            /json/dashboard/{id}:
+                get:
+                    summary: Get dashboard statistics
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            numberOfUserDevices:
+                                                type: number
+                                            mostPopularUserDevicesType:
+                                                type: object
+                                                properties:
+                                                    type:
+                                                        type: string
+                                                    quantity:
+                                                        type: number
+                                            numberOfUsersInSystem:
+                                                type: number
+                                            mostPopularDevicesTypeInSystem:
+                                                type: object
+                                                properties:
+                                                    type:
+                                                        type: string
+                                                    quantity:
+                                                        type: number
+            /json/devices/{id}:
+                get:
+                    summary: Get all user devices
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                name:
+                                                    type: string
+                                                device_type:
+                                                    type: string
+                                                mac_address:
+                                                    type: string
+                                                created_at:
+                                                    type: string
+            /json/device/get/{id}:
+                get:
+                    summary: Get specific device information
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: string
+                                            name:
+                                                type: string
+                                            device_type:
+                                                type: string
+                                            mac_address:
+                                                type: string
+                                            created_at:
+                                                type: string
+                        '404':
+                            description: Not found
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+            /json/device/delete/{id}:
+                delete:
+                    summary: Remove user device
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/OkResponse'
+                        '404':
+                            description: Not found
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+            /json/add/device/{id}:
+                post:
+                    summary: Add new device
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    required: [ deviceName, deviceType, deviceMacAddress ]
+                                    properties:
+                                        deviceName:
+                                            type: string
+                                        deviceType:
+                                            type: string
+                                        deviceMacAddress:
+                                            type: string
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/OkResponse'
+                        '400':
+                            description: Bad Request
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+                        '409':
+                            description: Conflict
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+            /json/profile/change/{id}:
+                put:
+                    summary: Change user data
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    required: [ firstName, lastName, email ]
+                                    properties:
+                                        firstName:
+                                            type: string
+                                        lastName:
+                                            type: string
+                                        email:
+                                            type: string
+                                            format: email
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/OkResponse'
+                        '400':
+                            description: BAD REQUEST
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+            /json/device/change/information/{id}:
+                put:
+                    summary: Change user device informations
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    required: [ deviceName, deviceType, deviceMacAddress ]
+                                    properties:
+                                        deviceName:
+                                            type: string
+                                        deviceType:
+                                            type: string
+                                        deviceMacAddress:
+                                            type: string
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/OkResponse'
+                        '400':
+                            description: Bad Request
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+                        '409':
+                            description: Conflict
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+            /json/device/change/parameter/{id}:
+                put:
+                    summary: Change device parameter
+                    parameters:
+                        - in: path
+                          name: id
+                          description: User ID (Uuid v4)
+                          schema:
+                              type: string
+                          required: true
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    required: [ deviceName, deviceType, deviceMacAddress ]
+                                    properties:
+                                        deviceName:
+                                            type: string
+                                        deviceType:
+                                            type: string
+                                        deviceMacAddress:
+                                            type: string
+                    responses:
+                        '200':
+                            description: Success
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/OkResponse'
+                        '400':
+                            description: Bad Request
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
+                        '404':
+                            description: Not found
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/FailureResponse'
 
+        components:
+            schemas:
+                OkResponse:
+                    type: object
+                    properties:
+                        status:
+                            type: string
+                            example: OK
+                FailureResponse:
+                    type: object
+                    properties:
+                        errors:
+                            type: array
+                            items:
+                                type: string
     areas:
         path_patterns:
             - ^/api(?!/doc$)
