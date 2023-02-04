@@ -7,7 +7,6 @@ namespace App\Tests\Core\Application\Query;
 use App\Core\Application\Query\DeviceQuery\Device;
 use App\Core\Domain\Uuid;
 use App\Core\Infrastructure\Symfony\Uuid4;
-use App\Device\Application\UseCase\AddFeature\Command as AddFeatureCommand;
 use App\Device\Domain\DeviceType;
 use App\Device\Domain\MACAddress;
 use App\Tests\DoctrineTestCase;
