@@ -27,8 +27,13 @@ bash:
 	${EXEC_COMMAND} $(SHELL)
 
 # Tests
-test:
+test: phpunit behat
+
+phpunit:
 	${EXEC_COMMAND} vendor/bin/phpunit tests
+
+behat:
+	${EXEC_COMMAND} vendor/bin/behat --stop-on-failure -f progress
 
 
 # Static analysis
