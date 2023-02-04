@@ -10,6 +10,7 @@ use App\Core\Domain\Clock;
 use App\Core\Domain\Clock\TestClock;
 use App\Core\Domain\Email;
 use App\Core\Domain\Uuid;
+use App\DataFixtures\FeaturesFixtures;
 use App\Device\Application\UseCase\AddDevice\Command as AddDeviceCommand;
 use App\Device\Application\UseCase\AddDeviceFeature\Command as AddDeviceFeatureCommand;
 use App\Device\Application\UseCase\AddFeature\Command as addFeatureCommand;
@@ -23,7 +24,6 @@ use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Messenger\MessageBusInterface;
-use App\DataFixtures\FeaturesFixtures;
 
 class DoctrineTestCase extends WebTestCase
 {
@@ -79,7 +79,7 @@ class DoctrineTestCase extends WebTestCase
             ->get(DatabaseToolCollection::class)
             ->get()
             ->loadFixtures([
-                FeaturesFixtures::class
+                FeaturesFixtures::class,
             ]);
     }
 
