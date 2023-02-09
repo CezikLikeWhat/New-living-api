@@ -43,12 +43,12 @@ class DBALUserQuery implements UserQuery
 
     public function getNumberOfAllUsers(): int
     {
-        /** @var array{ number_of_devices: int } $data */
+        /** @var array{ number_of_users: int } $data */
         $data = $this->connection->fetchAssociative('
-            SELECT COUNT(d.id) as number_of_devices
-            FROM devices d
+            SELECT COUNT(users.id) as number_of_users
+            FROM users
         ');
 
-        return $data['number_of_devices'];
+        return $data['number_of_users'];
     }
 }

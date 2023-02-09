@@ -29,3 +29,6 @@ public/.DS_Store
 ###< symfony/phpunit-bridge ###
 
 TODO.md
+###> friends-of-behat/symfony-extension ###
+/behat.yml
+###< friends-of-behat/symfony-extension ###

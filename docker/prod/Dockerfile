@@ -1,4 +1,4 @@
-FROM new-living-base as new-living-prod
+FROM cezarymackowski/new-living-web-app-base as new-living-prod
 
 ENV APP_ENV prod
 ENV APP_DEBUG 0

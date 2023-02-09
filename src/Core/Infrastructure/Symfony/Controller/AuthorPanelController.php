@@ -19,7 +19,7 @@ class AuthorPanelController extends AbstractController
     #[Route('/json/author', name: 'get_author_data', methods: ['GET'])]
     public function getAuthorData(): Response
     {
-        $authorAbout = 'My name is Cezary Maćkowski. I\'m a final year student in the field of engineering computer science at the Nicolaus Copernicus University in Torun. I have been working as a Backend/Cloud Developer at Iteo since March 2022. I work with technologies such as PHP(Symfony), Twig, Docker and Google Cloud Platform. I\'m interested in cyber security, hacking, IoT (Internet of Things) and web technologies in general. In my free time I create projects based on Go and Python programming languages.';
+        $authorAbout = "My name is Cezary Maćkowski. I'm a final year student in the field of engineering computer science at the Nicolaus Copernicus University in Torun. I have been working as a Backend/Cloud Developer at Iteo since March 2022. I work with technologies such as PHP(Symfony), Twig, Docker and Google Cloud Platform. I'm interested in cyber security, hacking, IoT (Internet of Things) and web technologies in general. In my free time I create projects based on Go and Python programming languages.";
 
         return $this->json(
             [

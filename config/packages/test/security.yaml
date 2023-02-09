@@ -1,0 +1,11 @@
+security:
+  password_hashers:
+    App\Security\Symfony\Security\User:
+      algorithm: plaintext
+  providers:
+    oauth:
+      id: new_living_user.oauth_user_provider
+  firewalls:
+    main:
+      http_basic: ~
+      security: false
