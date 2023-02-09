@@ -217,7 +217,7 @@ class DevicesController extends AbstractController
         $systemIdentifier = Uuid4::fromString($id);
         $userDevices = $this->deviceQuery->getAllDevicesByUserId($systemIdentifier);
 
-        return $this->json([$userDevices], Response::HTTP_OK);
+        return $this->json($userDevices, Response::HTTP_OK);
     }
 
     #[Route('/json/device/get/{id}', name: 'get_device_data', methods: ['GET'])]

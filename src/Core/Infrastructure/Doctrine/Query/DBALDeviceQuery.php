@@ -166,9 +166,9 @@ class DBALDeviceQuery implements DeviceQuery
          * }[] $deviceFeatures
          */
         $deviceFeatures = $this->connection->fetchAllAssociative('
-            SELECT f.name, 
-                   f.display_type,
-                   f.code_name
+            SELECT DISTINCT f.name, 
+                            f.display_type,
+                            f.code_name
             FROM features f
             INNER JOIN devices_features df on f.feature_id = df.feature_id
             WHERE df.device_id = :deviceId
@@ -213,7 +213,7 @@ class DBALDeviceQuery implements DeviceQuery
             $deviceInformation['name'],
             DeviceType::fromString($deviceInformation['device_type']),
             new MACAddress($deviceInformation['mac_address']),
-            new \DateTimeImmutable($deviceInformation['created_at']),
+            \DateTimeImmutable::createFromFormat('Y-m-d', $deviceInformation['created_at']),
             $payload,
             $arrayOfFeatures
         );
