@@ -1,0 +1,65 @@
+default:
+  image: cezarymackowski:4567/new-living/new-living-api:1.0.0
+  tags:
+    - docker
+
+services:
+  - name: postgres:14.3-alpine
+    alias: new-living-database
+
+variables:
+  POSTGRES_DB: new-living-api_test
+  POSTGRES_USER: new-living
+  POSTGRES_PASSWORD: new-living
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+cache:
+  key:
+    files:
+      - composer.json
+      - composer.lock
+  paths:
+    - vendor/
+
+install_dependencies:
+  stage: build
+  needs: []
+  script:
+    - make composer -e EXEC_COMMAND=''
+
+static_analysis 1/3:
+  stage: test
+  needs:
+    - install_dependencies
+  script:
+    - make phpstan -e EXEC_COMMAND=''
+
+static_analysis 2/3:
+  stage: test
+  needs:
+    - install_dependencies
+  script:
+    - make psalm -e EXEC_COMMAND=''
+
+static_analysis 3/3:
+  stage: test
+  needs:
+    - install_dependencies
+  script:
+    - make phpcsfixer -e EXEC_COMMAND=''
+
+phpunit:
+  stage: test
+  needs:
+    - install_dependencies
+  script:
+    - make preparedbtest -e EXEC_COMMAND=''
+    - make phpunit -e EXEC_COMMAND=''
+
+behat:
+  stage: test
+  needs:
+    - install_dependencies
+  script:
+    - make preparedbtest -e EXEC_COMMAND=''
+    - make behat -e EXEC_COMMAND=''
