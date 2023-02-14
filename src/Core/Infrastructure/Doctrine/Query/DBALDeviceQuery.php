@@ -213,7 +213,7 @@ class DBALDeviceQuery implements DeviceQuery
             $deviceInformation['name'],
             DeviceType::fromString($deviceInformation['device_type']),
             new MACAddress($deviceInformation['mac_address']),
-            \DateTimeImmutable::createFromFormat('Y-m-d', $deviceInformation['created_at']),
+            \DateTimeImmutable::createFromFormat('Y-m-d', $deviceInformation['created_at']) ?: new \DateTimeImmutable(),
             $payload,
             $arrayOfFeatures
         );
