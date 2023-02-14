@@ -51,7 +51,7 @@ class GeneralDeviceInformationFormType extends AbstractType
             ])
             ->add('deviceMacAddress', TextType::class, [
                 'trim' => true,
-                'label' => 'Device Mac address',
+                'label' => 'Device MAC address',
                 'attr' => [
                     'class' => 'form-control',
                     'type' => 'text',
@@ -71,6 +71,7 @@ class GeneralDeviceInformationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'method' => 'POST',
+            'csrf_protection' => false,
         ])
             ->setRequired([
                 'device',

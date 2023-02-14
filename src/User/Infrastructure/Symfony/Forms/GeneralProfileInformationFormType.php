@@ -68,6 +68,7 @@ class GeneralProfileInformationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'method' => 'POST',
+            'csrf_protection' => false,
         ])
             ->setRequired('userInfo');
     }
