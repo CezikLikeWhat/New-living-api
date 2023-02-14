@@ -67,3 +67,20 @@ Feature: I want to test profile data
     }
     """
     And response status code should be 200
+
+  Scenario: I want to change profile information
+    When I send "PUT" request to "/json/profile/change/92e1b2c3-2c18-4698-a764-6d1a42f650f5" with JSON headers and body:
+    """
+    {
+      "firstName": "Andrzej",
+      "lastName": "Chodnikowski",
+      "email": "andrzej.chodnikowski@gmail.com"
+    }
+    """
+    Then response payload should be json:
+    """
+    {
+      "status": "OK"
+    }
+    """
+    And response status code should be 200

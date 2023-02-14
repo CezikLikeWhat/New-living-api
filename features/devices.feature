@@ -119,3 +119,37 @@ Feature: I want to test devices controller
     ]
     """
     And response status code should be 200
+
+  Scenario: I want to change device information
+    When I send "PUT" request to "/json/device/change/information/36340076-0431-4a95-8444-69cf1f3173ec" with JSON headers and body:
+    """
+    {
+      "deviceName": "Led ring - office",
+      "deviceType": "Led ring",
+      "deviceMacAddress": "e4:5f:01:2b:58:01"
+    }
+    """
+    Then response payload should be json:
+    """
+    {
+      "status": "OK"
+    }
+    """
+    And response status code should be 200
+
+  Scenario: I want to add new device
+    When I send "POST" request to "/json/add/device/36340076-0431-4a95-8444-69cf1f3173ec" with JSON headers and body:
+    """
+    {
+      "deviceName": "new Led ring - kitchen",
+      "deviceType": "Led ring",
+      "deviceMacAddress": "d1:ff:01:12:22:04"
+    }
+    """
+    Then response payload should be json:
+    """
+    {
+      "status": "OK"
+    }
+    """
+    And response status code should be 200
